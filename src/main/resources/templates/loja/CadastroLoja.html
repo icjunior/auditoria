@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://brewer.algaworks.com">
+<head>
+	<title>Cadastro de lojas</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>Cadastro de lojas</h1>
+					</div>
+					<div class="col-xs-4">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/lojas}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Pesquisa loja</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="POST" th:object="${loja}"
+				class="form-vertical  js-form-loading" th:action="@{/lojas/novo}">
+				
+				<hti:message />
+				
+				<input type="hidden" th:field="*{codigo}" />
+
+				<div class="row">
+					<div class="col-sm-6 form-group bw-required" hti:classforerror="nome">
+						<label for="nome" class="control-label">Raz&atilde;o social</label> 
+						<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
+					</div>
+					
+					<div class="col-sm-6 form-group bw-required" hti:classforerror="nome">
+						<label for="apelido" class="control-label">Apelido</label> 
+						<input id="apelido" type="text" class="form-control" th:field="*{apelido}"/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4 form-group bw-required" hti:classforerror="nome">
+						<label for="cnpj" class="control-label">CNPJ</label> 
+						<input id="cnpj" type="text" class="form-control js-cnpj" th:field="*{cnpj}"/>
+					</div>
+
+					<div class="col-sm-4 form-group bw-required" hti:classforerror="nome">
+						<label for="inscricaoEstadual" class="control-label">I.E.</label> 
+						<input id="inscricaoEstadual" type="text" class="form-control" th:field="*{ie}"/>
+					</div>
+					
+					<div class="col-sm-4 form-group">
+						<label for="telefone" class="control-label">Telefone</label> 
+						<input type="text" class="form-control js-phone-number" id="telefone" th:field="*{telefone}"/>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-3 form-group bw-required" hti:classforerror="nome">
+						<label for="cep" class="control-label">CEP</label>
+						<input id="cep" type="text" class="form-control js-cep" th:field="*{cep}"/>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-6 form-group bw-required" hti:classforerror="nome">
+						<label for="endereco" class="control-label">Endere&ccedil;o</label>
+						<input id="endereco" type="text" class="form-control" th:field="*{endereco}"/>
+					</div>
+					
+					<div class="col-sm-3 form-group bw-required" hti:classforerror="nome">
+						<label for="numero" class="control-label">N&uacute;mero</label>
+						<input id="numero" type="text" class="form-control" th:field="*{numero}"/>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-4 form-group bw-required" hti:classforerror="nome">
+						<label for="bairro" class="control-label">Bairro</label>
+						<input id="numero" type="text" class="form-control" th:field="*{bairro}"/>
+					</div> 
+					
+					<div class="col-sm-4 form-group bw-required" hti:classforerror="nome">
+						<label for="cidade" class="control-label">Cidade</label>
+						<input id="cidade" type="text" class="form-control" th:field="*{cidade}"/>
+					</div>
+					
+					<div class="col-sm-4 form-group bw-required" hti:classforerror="nome">
+						<label for="estado" class="control-label">Estado</label>
+						<input id="estado" type="text" class="form-control" th:field="*{estado}"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 form-group bw-required" hti:classforerror="emailGerente">
+						<label for="emailGerente" class="control-label">E-mail gerente</label>
+						<input id="emailGerente" type="email" class="form-control" th:field="*{emailGerente}"/>
+					</div>
+					<div class="col-sm-6 form-group bw-required" hti:classforerror="emailSupervisor">
+						<label for="emailSupervisor" class="control-label">E-mail supervisor</label>
+						<input id="emailSupervisor" type="email" class="form-control" th:field="*{emailSupervisor}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

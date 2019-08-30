@@ -1,0 +1,1 @@
+ALTER TABLE pergunta ADD mostra_comentario boolean;

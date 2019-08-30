@@ -1,0 +1,1 @@
+ALTER TABLE loja ADD cep VARCHAR(10);

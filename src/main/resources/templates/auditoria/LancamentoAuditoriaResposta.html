@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://hti.audit.bigsupermercados.com.br">
+<head>
+	<title>Lançamento de auditoria - respostas</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Lançamento de auditorias - respostas</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/auditorias}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Pesquisa auditoria</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="POST" th:object="${respostaAuditoria}" th:action="@{/auditorias/lancamentoResposta}">
+				
+				<hti:message />
+				
+				<input type="hidden" id="pergunta" th:field="*{pergunta}" />
+				<input type="hidden" id="auditoria" th:field="*{auditoria}"/>
+				<input type="hidden" id="codigoRespostaAuditoria" th:field="*{codigo}"/>
+							
+				<div class="row">
+					<div class="col-sm-4 form-group">
+						<label class="control-label">Código: </label>
+						<label class="control-label" th:text="${respostaAuditoria.pergunta.codigo}">1</label>  
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-8 form-group">
+						<label class="control-label">Nome: </label>
+						<label class="control-label" th:text="${respostaAuditoria.pergunta.nome}">Esta é uma pergunta</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 form-group">
+						<label class="control-label" for="status">Status</label>
+						<div>
+							<input type="checkbox" class="js-status" data-size="small" data-off-color="danger" 
+								data-on-text="Satisfatório" data-off-text="Insatisfatório" th:field="*{satisfatorio}"/>
+						</div>
+					</div>
+				</div>
+				<div class="row" th:if="${respostaAuditoria.pergunta.mostraComentario}">
+					<div class="col-sm-6">
+						<label class="control-label" for="comentarios">Comentários:</label>
+					</div>
+				</div>
+				<div class="row" th:if="${respostaAuditoria.pergunta.mostraComentario}">
+					<div class="form-group col-sm-12">
+						<textarea cols="20" rows="5" class="form-control" th:field="*{comentario}" >
+						</textarea> 
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-12">
+						<input type="hidden" th:field="*{foto}"> <input
+							type="hidden" th:field="*{contentType}"> <label
+							class="control-label">Foto</label>
+
+						<div class="js-container-foto-cerveja"
+							th:attr="data-url-fotos=@{/fotos}">
+							<div id="upload-drop" class="bw-upload">
+								<i class="glyphicon glyphicon-cloud-upload"></i> <span>Arraste
+									a foto aqui ou </span> <a class="bw-upload-form-file">selecione <input
+									type="file" id="upload-select" accept=".jpg,.jpeg,.png" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+				</div>
+			</form>
+		</div>	
+		<th:block th:replace="hbs/FotoCerveja"></th:block>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/estilo.cadastro-rapido.js}"></script>
+		<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+		<script th:src="@{/javascripts/vendors/upload.min.js}"></script>
+		<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
+		<script th:src="@{/javascripts/imagem.upload-foto.js}"></script>
+		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+		<script>
+			$('.js-status').bootstrapSwitch();
+		</script>
+	</th:block>
+</body>
+
+</html>

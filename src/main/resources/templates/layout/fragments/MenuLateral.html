@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:hti="http://hti.htisoftware.com.br">
+<body>
+	<aside class="aw-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
+		<div class="aw-layout-sidebar__content">
+			<nav class="aw-menu  js-menu">
+				<ul class="aw-menu__list">
+					<li class="aw-menu__item" hti:menu="@{/}">
+						<a th:href="@{/}">
+							<i class="fa  fa-fw  fa-home"></i><span>Dashboard</span>
+						</a>
+					</li>
+					
+					<li class="aw-menu__item">
+						<a href="#"> 
+							<i class="fa  fa-fw  fa-credit-card"></i>
+							<span>Auditorias</span> 
+							<i class="aw-menu__navigation-icon  fa"></i>
+						</a>
+						<ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/auditorias.+}">
+								<a th:href="@{/auditorias/novo}">Cadastrar</a>
+							</li>
+						</ul>
+						<ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/auditorias}">
+								<a th:href="@{/auditorias}">Lançar</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="aw-menu__item">
+						<a href="#"> 
+							<i class="fa  fa-fw  fa-database"></i>
+								<span>Cadastros</span> 
+							<i class="aw-menu__navigation-icon  fa"></i>
+						</a>
+						
+						<ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/lojas.*}">
+								<a th:href="@{/lojas}">Lojas</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/tipos.*}">
+								<a th:href="@{/tipos}">Tipos</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/setores.*}">
+								<a th:href="@{/setores}">Setores</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/perguntas.*}">
+								<a th:href="@{/perguntas}">Perguntas</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/usuarios.*}">
+								<a th:href="@{/usuarios}">Usuários</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://hti.audit.bigsupermercados.com.br"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+<head>
+<title>Pesquisa de lojas</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de lojas</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/lojas/novo}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Nova loja</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="GET" th:object="${lojaFilter}">
+				<div class="row">
+					<div class="form-group col-sm-12">
+						<label class="control-label" for="nome">Nome</label> 
+						<input type="text" class="form-control" id="nome" th:field="*{nome}" />
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Pesquisar</button>
+			</form>
+
+			<div class="table-responsive bw-tabela-simples">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="table-cervejas-col-sku">
+								Código
+							</th>
+							<th class="table-cervejas-col-nome">
+								<hti:order page="${pagina}" field="nome" text="Nome" />
+							</th>
+							<th>
+								Nome fantasia
+							</th>
+							<th>
+								CNPJ
+							</th>
+							<th class="table-cervejas-col-acoes">Ações</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="loja : ${pagina.conteudo}">
+							
+							<td class="text-center" th:text="${loja.codigo}">1</td>
+							<td th:text="${loja.nome}">Teste</td>
+							<td th:text="${loja.apelido}"></td>
+							<td th:text="${loja.cnpj}"></td>
+							<td class="text-center">
+								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
+									th:href="@{/lojas/{codigo}(codigo=${loja.codigo})}"> 
+									<i class="glyphicon glyphicon-pencil"></i>
+								</a> 
+								<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn" title="Excluir" 
+									data:objeto="${loja.nome}"
+									href="#" data:url="@{/lojas/{codigo}(codigo=${loja.codigo})}"> 
+									<i class="glyphicon glyphicon-remove"></i>
+								</a>
+							</td>
+						</tr>
+						<tr th:if="${pagina.vazia}">
+							<td colspan="7">Nenhuma loja encontrada</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<hti:pagination page="${pagina}"/>
+		</div>
+	</section>
+</body>
+
+</html>

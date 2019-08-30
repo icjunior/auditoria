@@ -1,0 +1,1 @@
+ alter table loja modify telefone varchar(15);

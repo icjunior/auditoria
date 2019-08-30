@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://hti.audit.bigsupermercados.com.br">
+<head>
+<title>Lançamento de auditoria - setor</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Lançamento de auditorias - setor</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/auditorias}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Pesquisa auditoria</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Código: </label>
+					<label class="control-label" th:text="${tipo.codigo}"></label> 
+				</div>
+			</div>
+			<div class="row">
+					<div class="col-sm-8">
+						<label class="control-label">Nome: </label>
+						<label class="control-label" th:text="${tipo.nome}"></label>
+					</div>
+			</div>
+			<div class="table-responsive bw-tabela-simples">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="table-cervejas-col-sku">
+								Código
+							</th>
+							<th class="table-cervejas-col-nome">
+								Nome
+							</th>
+						</tr>
+					</thead>
+	
+					<tbody>
+							<tr th:each="setor : ${tipo.setores}">
+								<td class="text-center">
+									<a  href="#"
+										th:href="@{/auditorias/lancamentoPergunta/{codigoAuditoria}/{codigoSetor}/(codigoAuditoria=${codigoAuditoria},codigoSetor=${setor.codigo})}" 
+										th:text="${setor.codigo}"></a>
+								</td>
+								<td>
+									<a  href="#"
+										th:href="@{/auditorias/lancamentoPergunta/{codigoAuditoria}/{codigoSetor}/(codigoAuditoria=${codigoAuditoria},codigoSetor=${setor.codigo})}" 
+									 	th:text="${setor.nome}">
+								 	</a>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(tipo.setores)}">
+								<td colspan="7">Nenhum tipo encontrado</td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>
