@@ -15,6 +15,15 @@ public class RespostaDTO {
 		this.comentario = comentario;
 		this.foto = foto;
 		this.contentType = contentType;
+
+		validaFoto(this.foto);
+	}
+
+	private void validaFoto(String foto) {
+		if (foto == null || foto.equals("")) {
+			this.foto = "sem_imagem.jpg";
+			return;
+		}
 	}
 
 	public String getPergunta() {
@@ -46,6 +55,7 @@ public class RespostaDTO {
 	}
 
 	public void setFoto(String foto) {
+		validaFoto(foto);
 		this.foto = foto;
 	}
 

@@ -24,11 +24,6 @@ public class RelatorioService {
 	private Auditorias auditorias;
 
 	public byte[] gerarRelatorioPorAuditoria(Long codigoAuditoria) throws Exception {
-		// Date dataProducao =
-		// Date.from(LocalDateTime.of(periodoRelatorio.getDataInicio(), LocalTime.of(0,
-		// 0, 0))
-		// .atZone(ZoneId.systemDefault()).toInstant());
-
 		AuditoriaDTO auditoria = auditorias.cabecalhoAuditoria(codigoAuditoria);
 		List<RespostaDTO> auditoriaList = auditorias.relatorioPorAuditoria(codigoAuditoria);
 

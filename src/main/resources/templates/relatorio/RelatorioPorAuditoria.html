@@ -3,7 +3,8 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:brewer="http://brewer.algaworks.com"
-	layout:decorate="~{layout/LayoutPadrao}">
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://brewer.algaworks.com">
 
 <head>
 <title>Relatório - Pedidos emitidos</title>
@@ -18,24 +19,22 @@
 	</div>
 
 	<div class="container-fluid">
-		<form method="POST" th:object="${relatorioAuditoria}"
-			th:action="@{/relatorios/auditoria}" target="_blank">
+		<form method="POST" th:object="${auditoria}" th:action="@{/relatorios/auditoria}" target="_blank">
 
 			<brewer:message />
-
-			<th:block th:include="fragments/MensagensErroValidacao"></th:block>
-
 			<div class="row">
-				<div class="form-group  col-sm-12">
-					<label for="dataInicio">Auditoria</label>
-					<div class="form-inline">
-						<input type="text"
-							class="form-control  aw-form-control-inline-sm  js-date"
-							id="dataInicio" th:field="*{dataInicio}" autocomplete="off" />
+				<div class="col-sm-3 form-group bw-required">
+					<label for="tipo" class="control-label">Auditoria</label>
+					<div class="bw-field-action">
+						<select id="tipo" class="form-control" th:field="*{codigo}">
+							<option value="">Selecione a auditoria</option>
+							<option th:each="auditoria : ${auditorias}"
+								th:value="${auditoria.codigo}" th:text="|${auditoria.codigo} - ${auditoria.nome}|">
+							</option>
+						</select>
 					</div>
 				</div>
 			</div>
-
 			<button type="submit" class="btn  btn-primary">Emitir</button>
 		</form>
 	</div>
