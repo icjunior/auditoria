@@ -21,9 +21,9 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
-import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
@@ -42,6 +42,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 
+import br.com.bigsupermercados.audit.config.format.BigDecimalFormatter;
 import br.com.bigsupermercados.audit.controller.LojasController;
 import br.com.bigsupermercados.audit.controller.converter.LojaConverter;
 import br.com.bigsupermercados.audit.controller.converter.SetorConverter;
@@ -54,6 +55,7 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableCaching
+@EnableAsync
 public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 
 	private ApplicationContext applicationContext;
@@ -68,6 +70,7 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
 		resolver.setTemplateEngine(templateEngine());
 		resolver.setCharacterEncoding("UTF-8");
+		resolver.setOrder(1);
 		return resolver;
 	}
 
@@ -106,10 +109,13 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 		conversionService.addConverter(new SetorConverter());
 		// conversionService.addConverter(new GrupoConverter());
 
-		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
+		// NumberStyleFormatter bigDecimalFormatter = new
+		// NumberStyleFormatter("#,##0.00");
+		BigDecimalFormatter bigDecimalFormatter = new BigDecimalFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
 
-		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#.##0");
+		// NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#.##0");
+		BigDecimalFormatter integerFormatter = new BigDecimalFormatter("#,##0");
 		conversionService.addFormatterForFieldType(Integer.class, integerFormatter);
 
 		// API DE DATAS A PARTIR DO JAVA 8

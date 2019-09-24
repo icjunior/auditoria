@@ -10,7 +10,7 @@ import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
 
-import com.algaworks.brewer.validation.validator.AtributoConfirmacaoValidator;
+import br.com.bigsupermercados.audit.validation.validator.AtributoConfirmacaoValidator;
 
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

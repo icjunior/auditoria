@@ -56,6 +56,20 @@
 							</li>
 						</ul>
 					</li>
+					
+					<li class="aw-menu__item">
+						<a href="#"> 
+							<i class="fa  fa-fw  fa-database"></i>
+								<span>Relatórios</span> 
+							<i class="aw-menu__navigation-icon  fa"></i>
+						</a>
+						
+						<ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link" hti:menu="@{/relatorios.*}">
+								<a th:href="@{/relatorios/auditoria}">Auditorias</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</nav>
 		</div>

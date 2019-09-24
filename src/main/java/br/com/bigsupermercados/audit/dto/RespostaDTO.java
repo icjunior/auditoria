@@ -1,5 +1,10 @@
 package br.com.bigsupermercados.audit.dto;
 
+import static java.nio.file.FileSystems.getDefault;
+
+import java.io.File;
+import java.io.IOException;
+
 public class RespostaDTO {
 
 	private String pergunta;
@@ -20,9 +25,17 @@ public class RespostaDTO {
 	}
 
 	private void validaFoto(String foto) {
+		String caminho = null;
+		try {
+			caminho = new File(getDefault().getPath(System.getenv("HOME"), ".brewerfotos").toString())
+					.getCanonicalPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (foto == null || foto.equals("")) {
-			this.foto = "sem_imagem.jpg";
-			return;
+			this.foto = caminho + "\\temp\\sem_imagem.jpg";
+		} else {
+			this.foto = caminho + "\\temp\\" + foto;
 		}
 	}
 
