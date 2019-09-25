@@ -45,6 +45,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
-		//servletContext.setInitParameter("spring.profiles.default", "local");
+		servletContext.setInitParameter("spring.profiles.default", "producao");
 	}
 }
