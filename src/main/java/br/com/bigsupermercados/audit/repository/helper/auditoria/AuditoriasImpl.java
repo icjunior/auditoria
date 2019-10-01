@@ -70,8 +70,9 @@ public class AuditoriasImpl implements AuditoriasQueries {
 	@Override
 	public List<RespostaDTO> relatorioPorAuditoria(Long codigoAuditoria) {
 		String jpql = "SELECT "
-				+ "new br.com.bigsupermercados.audit.dto.RespostaDTO(r.pergunta.nome, r.satisfatorio, r.comentario, r.foto, r.contentType) "
-				+ "from Resposta r WHERE r.auditoria.codigo = :codigoAuditoria";
+				+ "new br.com.bigsupermercados.audit.dto.RespostaDTO(r.pergunta.nome, r.satisfatorio, r.comentario, r.foto, r.contentType, r.pergunta.setor.nome) "
+				+ "from Resposta r " + "WHERE r.auditoria.codigo = :codigoAuditoria "
+				+ "ORDER BY r.pergunta.setor.nome";
 
 		List<RespostaDTO> itensFiltrados = manager.createQuery(jpql, RespostaDTO.class)
 				.setParameter("codigoAuditoria", codigoAuditoria).getResultList();

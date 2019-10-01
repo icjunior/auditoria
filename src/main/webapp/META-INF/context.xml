@@ -5,7 +5,7 @@
 		factory="org.apache.naming.factory.BeanFactory"
 		type="com.mchange.v2.c3p0.ComboPooledDataSource"
 		driverClass="org.postgresql.Driver"
-		jdbcUrl="jdbc:postgresql://192.0.1.12/auditoria" user="postgres"
+		jdbcUrl="jdbc:postgresql://localhost/auditoria" user="postgres"
 		password="123456" initialPoolSize="5" 
 		minPoolSize="5" maxPoolSize="5" />
 

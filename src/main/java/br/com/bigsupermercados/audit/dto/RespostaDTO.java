@@ -12,14 +12,17 @@ public class RespostaDTO {
 	private String comentario;
 	private String foto;
 	private String contentType;
+	private String setor;
 
-	public RespostaDTO(String pergunta, boolean satisfatorio, String comentario, String foto, String contentType) {
+	public RespostaDTO(String pergunta, boolean satisfatorio, String comentario, String foto, String contentType,
+			String setor) {
 		super();
 		this.pergunta = pergunta;
 		this.satisfatorio = satisfatorio;
 		this.comentario = comentario;
 		this.foto = foto;
 		this.contentType = contentType;
+		this.setor = setor;
 
 		validaFoto(this.foto);
 	}
@@ -78,5 +81,38 @@ public class RespostaDTO {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public String getSetor() {
+		return setor;
+	}
+
+	public void setSetor(String setor) {
+		this.setor = setor;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((setor == null) ? 0 : setor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RespostaDTO other = (RespostaDTO) obj;
+		if (setor == null) {
+			if (other.setor != null)
+				return false;
+		} else if (!setor.equals(other.setor))
+			return false;
+		return true;
 	}
 }
