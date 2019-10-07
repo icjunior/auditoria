@@ -1,12 +1,12 @@
 package br.com.bigsupermercados.audit.controller;
 
-import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,9 +32,22 @@ public class RelatoriosController {
 		return mv;
 	}
 
-	@PostMapping("/auditoria")
-	public ResponseEntity<byte[]> gerarRelatorioAuditoria(Auditoria auditoria) throws Exception {
+	// @PostMapping("/auditoria")
+	// public ResponseEntity<byte[]> gerarRelatorioAuditoria(Auditoria auditoria)
+	// throws Exception {
+	// byte[] relatorio =
+	// relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
+	// return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,
+	// MediaType.APPLICATION_PDF_VALUE).body(relatorio);
+	// }
+
+	@GetMapping("/relatorioAuditoria")
+	public ResponseEntity<byte[]> geraRelatorioAuditoria(Auditoria auditoria) throws Exception {		
 		byte[] relatorio = relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
+
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		headers.set("Content-disposition", "inline; filename=auditoria_" + auditoria.getCodigo() + ".pdf");
+		return new ResponseEntity<>(relatorio, headers, HttpStatus.OK);
 	}
 }

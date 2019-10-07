@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="container-fluid">
-		<form method="POST" th:object="${auditoria}" th:action="@{/relatorios/auditoria}" target="_blank">
+		<form method="GET" th:object="${auditoria}" th:action="@{/relatorios/relatorioAuditoria}" target="_blank">
 
 			<brewer:message />
 			<div class="row">
