@@ -10,6 +10,7 @@ import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import br.com.bigsupermercados.audit.config.JPAConfig;
+import br.com.bigsupermercados.audit.config.MailConfig;
 import br.com.bigsupermercados.audit.config.SecurityConfig;
 import br.com.bigsupermercados.audit.config.ServiceConfig;
 import br.com.bigsupermercados.audit.config.WebConfig;
@@ -23,7 +24,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
+		return new Class<?>[] { WebConfig.class, MailConfig.class };
 	}
 
 	@Override
@@ -45,6 +46,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
-		servletContext.setInitParameter("spring.profiles.default", "producao");
+		servletContext.setInitParameter("spring.profiles.default", "desenvolvimento");
 	}
 }
