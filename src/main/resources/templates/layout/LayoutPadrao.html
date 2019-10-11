@@ -9,12 +9,17 @@
 
 <title>Brewer</title>
 
-	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/vendors.min.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/algaworks.min.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/application.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/brewer.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-datepicker.standalone.min.css}" />	
-	<link rel="shortcut icon" th:href="@{/images/favicon.png}"/> 
+<link rel="stylesheet" type="text/css"
+	th:href="@{/layout/stylesheets/vendors.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/layout/stylesheets/algaworks.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/layout/stylesheets/application.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/stylesheets/brewer.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/stylesheets/vendors/bootstrap-datepicker.standalone.min.css}" />
+<link rel="shortcut icon" th:href="@{/images/favicon.png}" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,36 +31,38 @@
 
 <body>
 
-<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}" />
+	<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+	<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}" />
 
 	<div class="aw-layout-page">
-		
+
 		<div th:replace="layout/fragments/BarraNavegacao :: navbar"></div>
 
 		<div th:replace="layout/fragments/MenuLateral :: layout-sidebar"></div>
 
-		<section class="aw-layout-content  js-content" layout:fragment="conteudo"></section>
+		<section class="aw-layout-content  js-content"
+			layout:fragment="conteudo"></section>
 
 		<div th:replace="layout/fragments/Footer :: layout-footer"></div>
-		
+
 	</div>
 
 	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
 	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
-	
+
 	<script th:src="@{/javascripts/vendors/jquery.maskMoney.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/jquery.mask.min.js}"></script>
-	
+
 	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.min.js}"></script>
-	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.pt-BR.min.js}"></script>
-	
+	<script
+		th:src="@{/javascripts/vendors/bootstrap-datepicker.pt-BR.min.js}"></script>
+
 	<script th:src="@{/javascripts/vendors/numeral.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/pt-br.min.js}"></script>
 	
 	<script th:src="@{/javascripts/brewer.js}"></script>
 	<script th:src="@{/javascripts/brewer.dialogo-excluir.js}"></script>
-	
+
 	<th:block layout:fragment="javascript-extra"></th:block>
 </body>
 </html>

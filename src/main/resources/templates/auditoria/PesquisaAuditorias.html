@@ -60,15 +60,20 @@
 							
 							<td class="text-center" th:text="${auditoria.codigo}">1</td>
 							<td th:text="${auditoria.nome}">Teste</td>
-							<td class="text-center">
+							<td>
 								<a class="btn btn-link btn-xs js-tooltip" title="Lançar" 
 									th:href="@{|/auditorias/lancamento/${auditoria.codigo}|}"> 
-									<i class="glyphicon glyphicon-pencil"></i>
+									<i class="glyphicon glyphicon-edit"></i>
 								</a> 
 								<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn" title="Excluir" 
 									data:objeto="${auditoria.nome}"
 									href="#" data:url="@{/auditorias/{codigo}(codigo=${auditoria.codigo})}"> 
 									<i class="glyphicon glyphicon-remove"></i>
+								</a>
+								<a class="btn btn-link btn-xs js-tooltip js-email-btn" title="Enviar e-mail" 
+									data:objeto="${auditoria.codigo}"
+									href="#" data:url="@{/auditorias/email}"> 
+									<i class="glyphicon glyphicon-envelope"></i>
 								</a>
 							</td>
 						</tr>
@@ -81,6 +86,9 @@
 			<hti:pagination page="${pagina}"/>
 		</div>
 	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/audit.dialog-email.js}"></script>
+	</th:block>
 </body>
-
 </html>

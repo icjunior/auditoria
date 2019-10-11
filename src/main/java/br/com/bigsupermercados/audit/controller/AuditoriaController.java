@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.audit.controller.page.PageWrapper;
+import br.com.bigsupermercados.audit.dto.EmailDTO;
+import br.com.bigsupermercados.audit.mail.Mailer;
 import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.model.Pergunta;
 import br.com.bigsupermercados.audit.model.Resposta;
@@ -57,11 +61,11 @@ public class AuditoriaController {
 	@Autowired
 	private CadastroAuditoriaService cadastroAuditoriaService;
 
-	// @Autowired
-	// private Perguntas perguntas;
-
 	@Autowired
 	private Respostas respostas;
+
+	@Autowired
+	private Mailer mailer;
 
 	@RequestMapping("/novo")
 	public ModelAndView novo(Auditoria auditoria) {
@@ -161,9 +165,6 @@ public class AuditoriaController {
 		try {
 			cadastroAuditoriaService.salvarResposta(respostaAuditoria);
 		} catch (RegistroJaCadastradoException e) {
-			// return lancarResposta(respostaAuditoria.getAuditoria().getCodigo(),
-			// respostaAuditoria.getPergunta().getCodigo());
-
 			return lancarResposta(respostaAuditoria.getAuditoria(), respostaAuditoria.getPergunta());
 		}
 
@@ -174,7 +175,7 @@ public class AuditoriaController {
 				"redirect:/auditorias/lancamentoPergunta/" + respostaAuditoria.getAuditoria().getCodigo() + "/"
 						+ respostaAuditoria.getPergunta().getSetor().getCodigo());
 	}
-	
+
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
 		Auditoria auditoria = auditorias.findOne(codigo);
@@ -183,6 +184,12 @@ public class AuditoriaController {
 		} catch (ImpossivelExcluirEntidadeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping(value = "/email", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResponseEntity<?> enviarEmail(@RequestBody EmailDTO email) {
+		mailer.enviar(email);
 		return ResponseEntity.ok().build();
 	}
 }

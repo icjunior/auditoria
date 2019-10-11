@@ -32,15 +32,6 @@ public class RelatoriosController {
 		return mv;
 	}
 
-	// @PostMapping("/auditoria")
-	// public ResponseEntity<byte[]> gerarRelatorioAuditoria(Auditoria auditoria)
-	// throws Exception {
-	// byte[] relatorio =
-	// relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
-	// return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,
-	// MediaType.APPLICATION_PDF_VALUE).body(relatorio);
-	// }
-
 	@GetMapping("/relatorioAuditoria")
 	public ResponseEntity<byte[]> geraRelatorioAuditoria(Auditoria auditoria) throws Exception {		
 		byte[] relatorio = relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
