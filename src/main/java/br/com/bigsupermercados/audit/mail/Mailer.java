@@ -38,7 +38,7 @@ public class Mailer {
 
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-			helper.setFrom(email.getEmail());
+			helper.setFrom("auditoria@bigsupermercados.com.br");
 			helper.setTo(email.getEmail());
 			helper.setSubject("Relatório de auditoria - código: " + email.getCodigo());
 			helper.setText("Olá " + email.getEmail() + " seu relatório da auditoria " + email.getCodigo()
