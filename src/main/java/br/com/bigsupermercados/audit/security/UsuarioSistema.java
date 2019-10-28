@@ -17,9 +17,7 @@ public class UsuarioSistema extends User {
 		this.usuario = usuario;
 	}
 
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
-
 }

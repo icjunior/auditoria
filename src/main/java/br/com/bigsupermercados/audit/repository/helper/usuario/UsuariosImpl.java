@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.repository.helper.usuario;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -58,5 +59,12 @@ public class UsuariosImpl implements UsuariosQueries {
 	public Optional<Usuario> porLoginEAtivo(String login) {
 		return manager.createQuery("from Usuario WHERE lower(login) = lower(:login) AND ativo = true", Usuario.class)
 				.setParameter("login", login).getResultList().stream().findFirst();
+	}
+
+	@Override
+	public List<String> permissoes(Usuario usuario) {
+		return manager.createQuery(
+				"SELECT distinct p.nome FROM Usuario u INNER JOIN u.grupos g INNER JOIN g.permissoes p WHERE u = :usuario",
+				String.class).setParameter("usuario", usuario).getResultList();
 	}
 }

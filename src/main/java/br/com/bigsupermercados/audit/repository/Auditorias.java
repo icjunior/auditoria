@@ -12,6 +12,4 @@ import br.com.bigsupermercados.audit.repository.helper.auditoria.AuditoriasQueri
 public interface Auditorias extends JpaRepository<Auditoria, Long>, AuditoriasQueries{
 
 	public Optional<Auditoria> findByNomeIgnoreCase(String nome);
-
-	
 }

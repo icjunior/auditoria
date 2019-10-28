@@ -33,8 +33,15 @@ public class RelatoriosController {
 	}
 
 	@GetMapping("/relatorioAuditoria")
-	public ResponseEntity<byte[]> geraRelatorioAuditoria(Auditoria auditoria) throws Exception {		
-		byte[] relatorio = relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
+	public ResponseEntity<byte[]> geraRelatorioAuditoria(Auditoria auditoria) {
+		byte[] relatorio = null;
+		
+		try {
+			relatorio = relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));

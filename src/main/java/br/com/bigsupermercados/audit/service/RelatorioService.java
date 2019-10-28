@@ -12,10 +12,12 @@ import br.com.bigsupermercados.audit.dto.AuditoriaDTO;
 import br.com.bigsupermercados.audit.dto.RespostaDTO;
 import br.com.bigsupermercados.audit.repository.Auditorias;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
 
 @Service
 public class RelatorioService {
@@ -31,13 +33,16 @@ public class RelatorioService {
 //		response.setHeader("Context-disposition", "inline; filename=auditoria.pdf");
 
 		auditoria.transformaData();
+		
+		JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(20, "/temp");
 
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("format", "pdf");
 		parametros.put("auditoriaNome", auditoria.getNome());
 		parametros.put("lojaNome", auditoria.getLoja());
 		parametros.put("dataAuditoria", auditoria.getDataAuditoria());
-
+		parametros.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
+		
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(auditoriaList);
 
 		InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/relatorio_auditoria.jasper");

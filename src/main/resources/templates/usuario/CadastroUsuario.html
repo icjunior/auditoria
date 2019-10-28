@@ -63,6 +63,21 @@
 						<input type="password" id="confirmacaoSenha" class="form-control" th:field="*{confirmacaoSenha}"/>
 					</div>
 				</div>
+				
+				<div class="row">
+					<div class="col-sm-3 form-group bw-required" hti:classforerror="grupos">
+						<label class="control-label">Grupos</label>
+						<div>
+							<th:block th:each="grupo : ${grupos}">
+								<div class="checkbox checkbox-inline">
+									<input type="checkbox" th:value="${grupo.codigo}" th:field="*{grupos}" />
+									<label th:for="${#ids.prev('grupos')}" class="control-label" th:text="${grupo.nome}">Administrador</label>
+								</div>
+							</th:block>
+						</div>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<button class="btn  btn-primary" type="submit">Salvar</button>
 				</div>

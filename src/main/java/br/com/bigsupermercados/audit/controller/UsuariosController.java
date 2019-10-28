@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.audit.controller.page.PageWrapper;
 import br.com.bigsupermercados.audit.model.Usuario;
+import br.com.bigsupermercados.audit.repository.Grupos;
 import br.com.bigsupermercados.audit.repository.Usuarios;
 import br.com.bigsupermercados.audit.repository.filter.UsuarioFilter;
 import br.com.bigsupermercados.audit.service.CadastroUsuarioService;
@@ -38,16 +39,20 @@ public class UsuariosController {
 	@Autowired
 	private CadastroUsuarioService cadastroUsuarioService;
 
+	@Autowired
+	private Grupos grupos;
+
 	@RequestMapping("/novo")
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("usuario/CadastroUsuario");
+		mv.addObject("grupos", grupos.findAll());
 		return mv;
 	}
 
-	@PostMapping({"/novo", "{\\+d}"})
+	@PostMapping({ "/novo", "{\\+d}" })
 	public ModelAndView cadastrar(@Valid Usuario usuario, BindingResult result, Model model,
 			RedirectAttributes attributes) {
-		
+
 		if (result.hasErrors()) {
 			return novo(usuario);
 		}
@@ -70,13 +75,14 @@ public class UsuariosController {
 	public ModelAndView pesquisar(UsuarioFilter usuarioFilter, BindingResult result,
 			@PageableDefault(size = 10) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("usuario/PesquisaUsuarios");
+		mv.addObject("grupos", grupos.findAll());
 
 		PageWrapper<Usuario> paginaWrapper = new PageWrapper<>(usuarios.filtrar(usuarioFilter, pageable),
 				httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
-	
+
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
 		Usuario usuario = usuarios.findOne(codigo);
@@ -87,7 +93,7 @@ public class UsuariosController {
 		}
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
 		Usuario usuario = usuarios.findOne(codigo);

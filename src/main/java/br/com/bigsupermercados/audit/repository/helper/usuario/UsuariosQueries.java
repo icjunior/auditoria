@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.repository.helper.usuario;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,4 +14,6 @@ public interface UsuariosQueries {
 	public Page<Usuario> filtrar(UsuarioFilter filtro, Pageable pageable);
 	
 	public Optional<Usuario> porLoginEAtivo(String email);
+	
+	public List<String> permissoes(Usuario usuario);
 }
