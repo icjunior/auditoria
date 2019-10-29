@@ -57,7 +57,8 @@ public class UsuariosImpl implements UsuariosQueries {
 
 	@Override
 	public Optional<Usuario> porLoginEAtivo(String login) {
-		return manager.createQuery("from Usuario WHERE lower(login) = lower(:login) AND ativo = true", Usuario.class)
+		return manager
+				.createQuery("from Usuario u join fetch u.grupos WHERE lower(u.login) = lower(:login) AND u.ativo = true", Usuario.class)
 				.setParameter("login", login).getResultList().stream().findFirst();
 	}
 

@@ -27,7 +27,7 @@ public class RelatoriosController {
 	@GetMapping("/auditoria")
 	public ModelAndView auditoria() {
 		ModelAndView mv = new ModelAndView("relatorio/RelatorioPorAuditoria");
-		mv.addObject("auditorias", auditorias.findAll());
+		mv.addObject("auditorias", auditorias.auditoriasPorPerfil());
 		mv.addObject(new Auditoria());
 		return mv;
 	}
@@ -35,11 +35,10 @@ public class RelatoriosController {
 	@GetMapping("/relatorioAuditoria")
 	public ResponseEntity<byte[]> geraRelatorioAuditoria(Auditoria auditoria) {
 		byte[] relatorio = null;
-		
+
 		try {
 			relatorio = relatorioService.gerarRelatorioPorAuditoria(auditoria.getCodigo());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -17,6 +17,8 @@ public interface AuditoriasQueries {
 	public Auditoria filtrarPorCodigo(Long codigoAuditoria);
 
 	public List<RespostaDTO> relatorioPorAuditoria(Long codigoAuditoria);
-	
+
 	public AuditoriaDTO cabecalhoAuditoria(Long codigoAuditoria);
+
+	public List<Auditoria> auditoriasPorPerfil();
 }

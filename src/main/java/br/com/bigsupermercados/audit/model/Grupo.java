@@ -27,7 +27,15 @@ public class Grupo implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "codigo_grupo"), inverseJoinColumns = @JoinColumn(name = "codigo_permissao"))
 	private List<Permissao> permissoes;
+	
+	public Grupo() {
+	}
 
+	public Grupo(Long codigo, String nome) {
+		this.codigo = codigo;
+		this.nome = nome;
+	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -57,6 +65,7 @@ public class Grupo implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -73,6 +82,11 @@ public class Grupo implements Serializable {
 			if (other.codigo != null)
 				return false;
 		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
 	}

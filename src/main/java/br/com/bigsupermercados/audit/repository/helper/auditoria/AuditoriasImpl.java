@@ -15,14 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import br.com.bigsupermercados.audit.dto.AuditoriaDTO;
 import br.com.bigsupermercados.audit.dto.RespostaDTO;
 import br.com.bigsupermercados.audit.model.Auditoria;
+import br.com.bigsupermercados.audit.model.Grupo;
+import br.com.bigsupermercados.audit.model.Usuario;
 import br.com.bigsupermercados.audit.repository.filter.AuditoriaFilter;
 import br.com.bigsupermercados.audit.repository.paginacao.PaginacaoUtil;
+import br.com.bigsupermercados.audit.security.UsuarioSistema;
 
 public class AuditoriasImpl implements AuditoriasQueries {
 
@@ -87,5 +91,22 @@ public class AuditoriasImpl implements AuditoriasQueries {
 
 		return manager.createQuery(jpql, AuditoriaDTO.class).setParameter("codigoAuditoria", codigoAuditoria)
 				.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Auditoria> auditoriasPorPerfil() {
+		UsuarioSistema usuarioLogado = (UsuarioSistema) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		Usuario usuario = usuarioLogado.getUsuario();
+
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Auditoria.class);
+
+		if (!usuario.getGrupos().contains(new Grupo(1L,"Administrador"))) {
+			criteria.add(Restrictions.eq("loja.codigo", usuario.getLoja().getCodigo()));
+		}
+
+		return criteria.list();
 	}
 }
