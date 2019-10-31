@@ -66,6 +66,15 @@ public class FotoStorageLocal implements FotoStorage {
 	}
 
 	@Override
+	public byte[] recuperaFotoTemporariaRelatorio(String nome) {
+		try {
+			return Files.readAllBytes(this.localTemporario.resolve("thumbnail." + nome));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro lendo arquivo temporário", e);
+		}
+	}
+
+	@Override
 	public String salvarTemporariamente(MultipartFile[] files) {
 		String novoNome = null;
 		if (files != null && files.length > 0) {
@@ -76,6 +85,13 @@ public class FotoStorageLocal implements FotoStorage {
 						this.localTemporario.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
 			} catch (IOException e) {
 				throw new RuntimeException("Erro salvando a foto na pasta temporária", e);
+			}
+
+			try {
+				Thumbnails.of(this.localTemporario.resolve(novoNome).toString()).size(149, 140)
+						.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IOException e) {
+				throw new RuntimeException("Erro gerando thumbnail", e);
 			}
 		}
 		return novoNome;
@@ -105,5 +121,15 @@ public class FotoStorageLocal implements FotoStorage {
 		}
 
 		return novoNome;
+	}
+
+	@Override
+	public void gerarThumbnail(String foto) {
+		try {
+			Thumbnails.of(foto).size(400, 400)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		} catch (IOException e) {
+			throw new RuntimeException("Erro gerando thumbnail", e);
+		}
 	}
 }

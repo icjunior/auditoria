@@ -4,6 +4,7 @@ import static java.nio.file.FileSystems.getDefault;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class RespostaDTO {
 
@@ -13,6 +14,7 @@ public class RespostaDTO {
 	private String foto;
 	private String contentType;
 	private String setor;
+	private InputStream arquivo;
 
 	public RespostaDTO(String pergunta, boolean satisfatorio, String comentario, String foto, String contentType,
 			String setor) {
@@ -24,7 +26,7 @@ public class RespostaDTO {
 		this.contentType = contentType;
 		this.setor = setor;
 
-		validaFoto(this.foto);
+		// validaFoto(this.foto);
 	}
 
 	private void validaFoto(String foto) {
@@ -114,5 +116,13 @@ public class RespostaDTO {
 		} else if (!setor.equals(other.setor))
 			return false;
 		return true;
+	}
+
+	public InputStream getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(InputStream arquivo) {
+		this.arquivo = arquivo;
 	}
 }
