@@ -31,6 +31,9 @@ public class Pergunta {
 	@Column(name = "mostra_comentario")
 	private Boolean mostraComentario;
 
+	@Column(name = "ativo", columnDefinition = "boolean default true")
+	private boolean ativo;
+
 	public boolean isNovo() {
 		return codigo == null;
 	}
@@ -65,5 +68,13 @@ public class Pergunta {
 
 	public void setMostraComentario(Boolean mostraComentario) {
 		this.mostraComentario = mostraComentario;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 }

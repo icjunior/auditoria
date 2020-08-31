@@ -45,13 +45,15 @@ public class PerguntasImpl implements PerguntasQueries {
 	}
 
 	private void adicionarFiltro(PerguntaFilter filtro, Criteria criteria) {
+		criteria.add(Restrictions.eq("ativo", true));
+		
 		if (filtro != null) {
 			if (!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
 			}
 		}
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public Pergunta filtrarPorCodigo(Long codigoPergunta) {

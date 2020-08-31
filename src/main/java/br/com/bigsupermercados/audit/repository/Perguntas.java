@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ import br.com.bigsupermercados.audit.repository.helper.pergunta.PerguntasQueries
 public interface Perguntas extends JpaRepository<Pergunta, Long>, PerguntasQueries{
 
 	public Optional<Pergunta> findByNomeIgnoreCaseAndSetor(String nome, Setor setor);
+	
+	public List<Pergunta> findByAtivo(boolean status);
 }

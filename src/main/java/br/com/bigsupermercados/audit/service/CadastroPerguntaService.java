@@ -30,7 +30,7 @@ public class CadastroPerguntaService {
 
 		return perguntas.saveAndFlush(pergunta);
 	}
-	
+
 	@Transactional
 	public void excluir(Pergunta pergunta) {
 		try {
@@ -38,6 +38,17 @@ public class CadastroPerguntaService {
 			perguntas.flush();
 		} catch (PersistenceException e) {
 			throw new ImpossivelExcluirEntidadeException("Impossível apagar pergunta. Já foi usada em algum momento");
+		}
+	}
+
+	@Transactional
+	public void inativar(Pergunta pergunta) {
+		try {
+			pergunta.setAtivo(false);
+			perguntas.save(pergunta);
+			perguntas.flush();
+		} catch (PersistenceException e) {
+			throw new ImpossivelExcluirEntidadeException("Impossível apagar a pergunta. Tente novamente mais tarde");
 		}
 	}
 }
