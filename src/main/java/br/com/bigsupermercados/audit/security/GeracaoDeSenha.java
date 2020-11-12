@@ -6,6 +6,6 @@ public class GeracaoDeSenha {
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode("admin"));
+		System.out.println(encoder.encode("BIG003sup"));
 	}
 }

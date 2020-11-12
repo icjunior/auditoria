@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.bigsupermercados.audit.controller.page.PageWrapper;
 import br.com.bigsupermercados.audit.model.Usuario;
 import br.com.bigsupermercados.audit.repository.Grupos;
+import br.com.bigsupermercados.audit.repository.Lojas;
 import br.com.bigsupermercados.audit.repository.Usuarios;
 import br.com.bigsupermercados.audit.repository.filter.UsuarioFilter;
 import br.com.bigsupermercados.audit.service.CadastroUsuarioService;
@@ -41,11 +42,15 @@ public class UsuariosController {
 
 	@Autowired
 	private Grupos grupos;
+	
+	@Autowired
+	private Lojas lojas;
 
-	@RequestMapping("/novo")
+	@GetMapping("/novo")
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("usuario/CadastroUsuario");
 		mv.addObject("grupos", grupos.findAll());
+		mv.addObject("lojas", lojas.findAll());
 		return mv;
 	}
 

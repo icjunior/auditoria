@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaft.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
 	layout:decorate="~{layout/LayoutPadrao}"
-	xmlns:brewer="http://brewer.algaworks.com"
+	xmlns:hti="http://hti.audit.bigsupermercados.com.br"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	xmlns:data="http://www.thymeleaf.org/extras/data">
 <head>
@@ -119,8 +119,7 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<brewer:pagination page="${pagina}"/>
+			<hti:pagination page="${pagina}"/>
 		</div>
 	</section>
 		<th:block layout:fragment="javascript-extra">
