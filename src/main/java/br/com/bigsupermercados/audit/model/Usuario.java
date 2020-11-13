@@ -55,7 +55,7 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "loja_codigo")
 	private Loja loja;
 
-	private boolean ativo;
+	private boolean ativo = true;
 
 	public boolean isNovo() {
 		return this.codigo == null;
