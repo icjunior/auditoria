@@ -3,10 +3,11 @@
 	xmlns:th="http://www.thymeleaft.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
 	layout:decorate="~{layout/LayoutPadrao}"
-	xmlns:hti="http://hti.audit.bigsupermercados.com.br">
+	xmlns:hti="http://brewer.algaworks.com">
 <head>
 	<title>Lançamento de auditoria - respostas</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -52,22 +53,20 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-3 form-group">
-						<label class="control-label" for="status">Status</label>
-						<div>
-							<input type="checkbox" class="js-status" data-size="small" data-off-color="danger" 
-								data-on-text="Satisfatório" data-off-text="Insatisfatório" th:field="*{satisfatorio}"/>
+					<div class="col-sm-5 form-group">
+						<div class="estrelas">
+							<input type="radio" th:id="cm_star_0" name="fb" th:value="0" th:field="*{nota}" checked/>
+							<th:block th:each="i: ${#numbers.sequence(1,5)}">
+								<label th:for="|cm_star_${i}|"><i class="fa"></i></label>
+							  	<input type="radio" th:id="|cm_star_${i}|" name="fb" th:value="${i}" th:field="*{nota}"/>
+						  	</th:block>
 						</div>
 					</div>
 				</div>
-				<div class="row" th:if="${respostaAuditoria.pergunta.mostraComentario}">
-					<div class="col-sm-6">
-						<label class="control-label" for="comentarios">Comentários:</label>
-					</div>
-				</div>
-				<div class="row" th:if="${respostaAuditoria.pergunta.mostraComentario}">
-					<div class="form-group col-sm-12">
-						<textarea cols="20" rows="5" class="form-control" th:field="*{comentario}" >
+				<div class="row">
+					<div class="form-group col-sm-12" hti:classforerror="comentario">
+						<label class="control-label" for="comentario">Comentários:</label>
+						<textarea cols="20" rows="5" class="form-control" th:field="*{comentario}" id="comentario" >
 						</textarea> 
 					</div>
 				</div>

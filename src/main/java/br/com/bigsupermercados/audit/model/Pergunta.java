@@ -28,8 +28,8 @@ public class Pergunta {
 	@JoinColumn(name = "setor_codigo")
 	private Setor setor;
 
-	@Column(name = "mostra_comentario")
-	private Boolean mostraComentario;
+//	@Column(name = "mostra_comentario")
+//	private Boolean mostraComentario;
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
 	private boolean ativo;
@@ -60,14 +60,6 @@ public class Pergunta {
 
 	public void setSetor(Setor setor) {
 		this.setor = setor;
-	}
-
-	public Boolean getMostraComentario() {
-		return mostraComentario;
-	}
-
-	public void setMostraComentario(Boolean mostraComentario) {
-		this.mostraComentario = mostraComentario;
 	}
 
 	public boolean isAtivo() {

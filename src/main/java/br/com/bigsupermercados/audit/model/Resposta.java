@@ -12,9 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "resposta_auditoria")
 public class Resposta {
-	
+
 	public Resposta() {
-		
+
 	}
 
 	public Resposta(Pergunta pergunta, Auditoria auditoria) {
@@ -37,9 +37,19 @@ public class Resposta {
 
 	private String comentario;
 
-	private Boolean satisfatorio;
+	private Integer nota = 0;
 
 	private String foto;
+
+	private Boolean satisfatorio;
+
+	public Boolean getSatisfatorio() {
+		return satisfatorio;
+	}
+
+	public void setSatisfatorio(Boolean satisfatorio) {
+		this.satisfatorio = satisfatorio;
+	}
 
 	@Column(name = "content_type")
 	private String contentType;
@@ -76,14 +86,6 @@ public class Resposta {
 		this.comentario = comentario;
 	}
 
-	public Boolean getSatisfatorio() {
-		return satisfatorio;
-	}
-
-	public void setSatisfatorio(Boolean satisfatorio) {
-		this.satisfatorio = satisfatorio;
-	}
-
 	public String getFoto() {
 		return foto;
 	}
@@ -98,6 +100,14 @@ public class Resposta {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public Integer getNota() {
+		return nota;
+	}
+
+	public void setNota(Integer nota) {
+		this.nota = nota;
 	}
 
 	@Override

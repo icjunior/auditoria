@@ -165,6 +165,7 @@ public class AuditoriaController {
 		try {
 			cadastroAuditoriaService.salvarResposta(respostaAuditoria);
 		} catch (RegistroJaCadastradoException e) {
+			result.rejectValue("comentario", e.getMessage(), e.getMessage());
 			return lancarResposta(respostaAuditoria.getAuditoria(), respostaAuditoria.getPergunta());
 		}
 
