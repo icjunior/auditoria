@@ -90,7 +90,7 @@ public class UsuariosController {
 
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Usuario usuario = usuarios.findOne(codigo);
+		Usuario usuario = usuarios.getOne(codigo);
 		try {
 			cadastroUsuarioService.excluir(usuario);
 		} catch (ImpossivelExcluirEntidadeException e) {

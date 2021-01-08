@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.audit.controller.page.PageWrapper;
 import br.com.bigsupermercados.audit.dto.EmailDTO;
+import br.com.bigsupermercados.audit.dto.LancamentoAuditoriaPerguntaDTO;
 import br.com.bigsupermercados.audit.mail.Mailer;
 import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.model.Pergunta;
@@ -34,6 +36,7 @@ import br.com.bigsupermercados.audit.model.Setor;
 import br.com.bigsupermercados.audit.model.Tipo;
 import br.com.bigsupermercados.audit.repository.Auditorias;
 import br.com.bigsupermercados.audit.repository.Lojas;
+import br.com.bigsupermercados.audit.repository.Perguntas;
 import br.com.bigsupermercados.audit.repository.Respostas;
 import br.com.bigsupermercados.audit.repository.Setores;
 import br.com.bigsupermercados.audit.repository.Tipos;
@@ -66,6 +69,9 @@ public class AuditoriaController {
 
 	@Autowired
 	private Mailer mailer;
+
+	@Autowired
+	private Perguntas perguntas;
 
 	@RequestMapping("/novo")
 	public ModelAndView novo(Auditoria auditoria) {
@@ -130,8 +136,12 @@ public class AuditoriaController {
 	public ModelAndView lancarPergunta(@PathVariable Long codigoAuditoria, @PathVariable Long codigoSetor) {
 		Setor setor = setores.filtrarPorCodigo(codigoSetor);
 
+		List<LancamentoAuditoriaPerguntaDTO> perguntasList = perguntas.pesquisarPorAuditoriaESetor(codigoAuditoria,
+				codigoSetor);
+		
 		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaPergunta");
 		mv.addObject("setor", setor);
+		mv.addObject("perguntas", perguntasList);
 		mv.addObject("codigoAuditoria", codigoAuditoria);
 
 		return mv;
@@ -179,7 +189,7 @@ public class AuditoriaController {
 
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Auditoria auditoria = auditorias.findOne(codigo);
+		Auditoria auditoria = auditorias.getOne(codigo);
 		try {
 			cadastroAuditoriaService.excluir(auditoria);
 		} catch (ImpossivelExcluirEntidadeException e) {

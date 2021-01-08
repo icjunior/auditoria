@@ -80,7 +80,7 @@ public class SetorController {
 	
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
-		Setor setor = setores.findOne(codigo);
+		Setor setor = setores.getOne(codigo);
 		
 		ModelAndView mv = novo(setor);
 		mv.addObject("setor", setor);
@@ -90,7 +90,7 @@ public class SetorController {
 	
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Setor setor = setores.findOne(codigo);
+		Setor setor = setores.getOne(codigo);
 		try {
 			cadastroSetorService.excluir(setor);
 		} catch (ImpossivelExcluirEntidadeException e) {

@@ -3,6 +3,7 @@ package br.com.bigsupermercados.audit.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Setor {
 	@JoinColumn(name = "tipo_codigo")
 	private Tipo tipo;
 
-	@OneToMany(mappedBy = "setor")
+	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
 	private List<Pergunta> perguntas;
 	
 	public boolean isNovo() {
@@ -69,5 +70,9 @@ public class Setor {
 
 	public void setPerguntas(List<Pergunta> perguntas) {
 		this.perguntas = perguntas;
+	}
+	
+	public Integer getQuantidadePerguntas() {
+		return this.perguntas.size();
 	}
 }

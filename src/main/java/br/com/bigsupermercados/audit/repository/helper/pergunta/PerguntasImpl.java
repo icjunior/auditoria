@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.audit.repository.helper.pergunta;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import br.com.bigsupermercados.audit.dto.LancamentoAuditoriaPerguntaDTO;
 import br.com.bigsupermercados.audit.model.Pergunta;
 import br.com.bigsupermercados.audit.repository.filter.PerguntaFilter;
 import br.com.bigsupermercados.audit.repository.paginacao.PaginacaoUtil;
@@ -46,7 +49,7 @@ public class PerguntasImpl implements PerguntasQueries {
 
 	private void adicionarFiltro(PerguntaFilter filtro, Criteria criteria) {
 		criteria.add(Restrictions.eq("ativo", true));
-		
+
 		if (filtro != null) {
 			if (!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
@@ -61,5 +64,22 @@ public class PerguntasImpl implements PerguntasQueries {
 		criteria.add(Restrictions.eq("codigo", codigoPergunta));
 		Pergunta pergunta = (Pergunta) criteria.list().stream().findFirst().get();
 		return pergunta;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<LancamentoAuditoriaPerguntaDTO> buscarPerguntasPorAuditoria(Long codigoAuditoria, Long codigoSetor) {
+		String jpql = "SELECT "
+				+ "new br.com.bigsupermercados.audit.dto.LancamentoAuditoriaPerguntaDTO(perguntas.codigo, perguntas.nome, respostas.nota, auditoria.codigo, setores.codigo, setores.nome) "
+				+ "FROM Auditoria auditoria "
+				+ "JOIN auditoria.tipos tipos "
+				+ "JOIN tipos.setores setores "
+				+ "JOIN setores.perguntas perguntas "
+				+ "LEFT JOIN auditoria.respostas respostas AND perguntas.respostas "
+				+ "WHERE auditoria.codigo = :codigoAuditoria AND setores.codigo = (:codigoSetor)";
+
+		return manager.createQuery(jpql, LancamentoAuditoriaPerguntaDTO.class)
+				.setParameter("codigoAuditoria", codigoAuditoria).setParameter("codigoSetor", codigoSetor).getResultList();
+
 	}
 }

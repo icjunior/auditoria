@@ -38,10 +38,10 @@
 					</div>
 				</div>
 				<div class="row">
-						<div class="col-sm-8">
-							<label class="control-label">Nome: </label>
-							<label class="control-label" th:text="${setor.nome}"></label>
-						</div>
+					<div class="col-sm-8">
+						<label class="control-label">Nome: </label>
+						<label class="control-label" th:text="${setor.nome}"></label>
+					</div>
 				</div>
 				
 				<div class="table-responsive bw-tabela-simples">
@@ -54,24 +54,35 @@
 								<th class="table-cervejas-col-nome">
 									Nome
 								</th>
+								<th class="table-cervejas-col-sku">
+									Avaliação
+								</th>
+								<th class="table-cervejas-col-sku">
+									Porcentagem
+								</th>
 							</tr>
 						</thead>
 		
 						<tbody>
-								<tr th:each="pergunta : ${setor.perguntas}">
+								<tr th:each="pergunta : ${perguntas}">
 									<td class="text-center">
 										<a  href="#"
-											th:href="@{/auditorias/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}/(codigoAuditoria=${codigoAuditoria},codigoPergunta=${pergunta.codigo})}" 
-											th:text="${pergunta.codigo}"></a>
+											th:href="@{/auditorias/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}/(codigoAuditoria=${codigoAuditoria},codigoPergunta=${pergunta.codigoPergunta})}" 
+											th:text="${pergunta.codigoPergunta}"></a>
 									</td>
 									<td>
 										<a  href="#"
-											th:href="@{/auditorias/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}/(codigoAuditoria=${codigoAuditoria},codigoPergunta=${pergunta.codigo})}" 
-											th:text="${pergunta.nome}">
+											th:href="@{/auditorias/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}/(codigoAuditoria=${codigoAuditoria},codigoPergunta=${pergunta.codigoPergunta})}" 
+											th:text="${pergunta.pergunta}">
 										</a>
 									</td>
+									<td class="text-center" th:text="|${pergunta.avaliacao == null ? 0 : pergunta.avaliacao}/5|">
+										
+									</td>
+									<td th:text="(${pergunta.avaliacao == null ? 0 : pergunta.avaliacao}/5)*100">
+									</td>
 								</tr>
-								<tr th:if="${#lists.isEmpty(setor.perguntas)}">
+								<tr th:if="${#lists.isEmpty(perguntas)}">
 									<td colspan="7">Nenhum tipo encontrado</td>
 								</tr>
 						</tbody>

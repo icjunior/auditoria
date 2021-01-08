@@ -107,7 +107,6 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 		conversionService.addConverter(new LojaConverter());
 		conversionService.addConverter(new TipoConverter());
 		conversionService.addConverter(new SetorConverter());
-		// conversionService.addConverter(new GrupoConverter());
 
 		// NumberStyleFormatter bigDecimalFormatter = new
 		// NumberStyleFormatter("#,##0.00");

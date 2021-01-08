@@ -52,6 +52,9 @@
 							<th class="table-cervejas-col-nome">
 								Nome
 							</th>
+							<th class="table-cervejas-col-sku">
+								Qtd.perguntas
+							</th>
 						</tr>
 					</thead>
 	
@@ -67,6 +70,8 @@
 										th:href="@{/auditorias/lancamentoPergunta/{codigoAuditoria}/{codigoSetor}/(codigoAuditoria=${codigoAuditoria},codigoSetor=${setor.codigo})}" 
 									 	th:text="${setor.nome}">
 								 	</a>
+								</td>
+								<td	th:text="${setor.quantidadePerguntas}">
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(tipo.setores)}">

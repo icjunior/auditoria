@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -39,6 +40,9 @@ public class Auditoria {
 	private List<Tipo> tipos;
 
 	private Boolean finalizado;
+
+	@OneToMany(mappedBy = "auditoria")
+	private List<Resposta> respostas;
 
 	public Long getCodigo() {
 		return codigo;
@@ -86,6 +90,14 @@ public class Auditoria {
 
 	public void setTipos(List<Tipo> tipos) {
 		this.tipos = tipos;
+	}
+
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
 	}
 
 	@Override

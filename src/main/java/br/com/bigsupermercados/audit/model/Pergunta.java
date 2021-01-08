@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.audit.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +36,9 @@ public class Pergunta {
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
 	private boolean ativo;
+
+	@OneToMany(mappedBy = "auditoria")
+	private List<Resposta> respostas;
 
 	public boolean isNovo() {
 		return codigo == null;
@@ -68,5 +74,13 @@ public class Pergunta {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
 	}
 }

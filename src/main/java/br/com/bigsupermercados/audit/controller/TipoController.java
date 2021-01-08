@@ -73,7 +73,7 @@ public class TipoController {
 
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
-		Tipo tipo = tipos.findOne(codigo);
+		Tipo tipo = tipos.getOne(codigo);
 		
 		ModelAndView mv = novo(tipo);
 		mv.addObject("tipo", tipo);
@@ -83,7 +83,7 @@ public class TipoController {
 	
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Tipo tipo = tipos.findOne(codigo);
+		Tipo tipo = tipos.getOne(codigo);
 		try {
 			cadastroTipoService.excluir(tipo);
 		} catch (ImpossivelExcluirEntidadeException e) {
