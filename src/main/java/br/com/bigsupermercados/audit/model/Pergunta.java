@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,10 +36,13 @@ public class Pergunta {
 //	private Boolean mostraComentario;
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
-	private boolean ativo;
+	private boolean ativo = true;
 
 	@OneToMany(mappedBy = "auditoria")
 	private List<Resposta> respostas;
+
+	@Column(name = "data_hora_inclusao")
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	public boolean isNovo() {
 		return codigo == null;
@@ -82,5 +86,13 @@ public class Pergunta {
 
 	public void setRespostas(List<Resposta> respostas) {
 		this.respostas = respostas;
+	}
+
+	public LocalDateTime getDataHoraInclusao() {
+		return dataHoraInclusao;
+	}
+
+	public void setDataHoraInclusao(LocalDateTime dataHoraInclusao) {
+		this.dataHoraInclusao = dataHoraInclusao;
 	}
 }

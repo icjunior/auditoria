@@ -107,7 +107,7 @@ public class PerguntaController {
 
 	@PutMapping("/inativar/{codigo}")
 	public @ResponseBody ResponseEntity<?> inativar(@PathVariable("codigo") Long codigo) {
-		Pergunta pergunta = perguntas.getOne(codigo);
+		Pergunta pergunta = perguntas.findOne(codigo);
 		try {
 			cadastroPerguntaService.inativar(pergunta);
 		} catch (ImpossivelExcluirEntidadeException e) {
