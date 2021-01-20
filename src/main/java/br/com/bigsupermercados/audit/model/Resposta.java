@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.audit.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "resposta_auditoria")
 public class Resposta {
@@ -43,95 +48,9 @@ public class Resposta {
 
 	private Boolean satisfatorio;
 
-	public Boolean getSatisfatorio() {
-		return satisfatorio;
-	}
-
-	public void setSatisfatorio(Boolean satisfatorio) {
-		this.satisfatorio = satisfatorio;
-	}
-
 	@Column(name = "content_type")
 	private String contentType;
 
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public Pergunta getPergunta() {
-		return pergunta;
-	}
-
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
-	}
-
-	public Auditoria getAuditoria() {
-		return auditoria;
-	}
-
-	public void setAuditoria(Auditoria auditoria) {
-		this.auditoria = auditoria;
-	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public Integer getNota() {
-		return nota;
-	}
-
-	public void setNota(Integer nota) {
-		this.nota = nota;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((auditoria == null) ? 0 : auditoria.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Resposta other = (Resposta) obj;
-		if (auditoria == null) {
-			if (other.auditoria != null)
-				return false;
-		} else if (!auditoria.equals(other.auditoria))
-			return false;
-		return true;
-	}
+	@Column(name = "data_hora_inclusao")
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 }

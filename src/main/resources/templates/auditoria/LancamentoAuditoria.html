@@ -44,8 +44,14 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-8">
-					<label class="control-label">Data estimada: </label>
-					<label class="control-label" th:text="${auditoria.data}"></label>
+					<label class="control-label">Data início: </label>
+					<label class="control-label" th:text="${#temporals.format(auditoria.dataHoraInicio, 'dd/MM/yyyy HH:mm')}"></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<label class="control-label">Responsável:</label>
+					<label class="control-label" th:text="${auditoria.usuario.nome}"></label>
 				</div>
 			</div>
 		

@@ -1,8 +1,9 @@
 package br.com.bigsupermercados.audit.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +29,6 @@ public class Auditoria {
 	@NotBlank(message = "Nome da auditoria deve ser preenchido")
 	private String nome;
 
-	private LocalDate data;
-
 	@NotNull(message = "Uma loja deve ser selecionada")
 	@ManyToOne
 	@JoinColumn(name = "loja_codigo")
@@ -39,10 +38,24 @@ public class Auditoria {
 	@JoinTable(name = "auditoria_tipo", joinColumns = @JoinColumn(name = "codigo_auditoria"), inverseJoinColumns = @JoinColumn(name = "codigo_tipo"))
 	private List<Tipo> tipos;
 
+	@Column(name = "finalizado")
 	private Boolean finalizado;
 
 	@OneToMany(mappedBy = "auditoria")
 	private List<Resposta> respostas;
+
+	@Column(name = "data_hora_inclusao")
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
+
+	@Column(name = "data_hora_fim")
+	private LocalDateTime dataHoraFim;
+
+	@Column(name = "data_hora_inicio")
+	private LocalDateTime dataHoraInicio;
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_codigo")
+	private Usuario usuario;
 
 	public Long getCodigo() {
 		return codigo;
@@ -60,28 +73,12 @@ public class Auditoria {
 		this.nome = nome;
 	}
 
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
 	public Loja getLoja() {
 		return loja;
 	}
 
 	public void setLoja(Loja loja) {
 		this.loja = loja;
-	}
-
-	public Boolean getFinalizado() {
-		return finalizado;
-	}
-
-	public void setFinalizado(Boolean finalizado) {
-		this.finalizado = finalizado;
 	}
 
 	public List<Tipo> getTipos() {
@@ -92,12 +89,52 @@ public class Auditoria {
 		this.tipos = tipos;
 	}
 
+	public Boolean getFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(Boolean finalizado) {
+		this.finalizado = finalizado;
+	}
+
 	public List<Resposta> getRespostas() {
 		return respostas;
 	}
 
 	public void setRespostas(List<Resposta> respostas) {
 		this.respostas = respostas;
+	}
+
+	public LocalDateTime getDataHoraInclusao() {
+		return dataHoraInclusao;
+	}
+
+	public void setDataHoraInclusao(LocalDateTime dataHoraInclusao) {
+		this.dataHoraInclusao = dataHoraInclusao;
+	}
+
+	public LocalDateTime getDataHoraFim() {
+		return dataHoraFim;
+	}
+
+	public void setDataHoraFim(LocalDateTime dataHoraFim) {
+		this.dataHoraFim = dataHoraFim;
+	}
+
+	public LocalDateTime getDataHoraInicio() {
+		return dataHoraInicio;
+	}
+
+	public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
+		this.dataHoraInicio = dataHoraInicio;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

@@ -5,7 +5,8 @@
 	layout:decorate="~{layout/LayoutPadrao}"
 	xmlns:hti="http://hti.audit.bigsupermercados.com.br">
 <head>
-<title>Lançamento de auditoria - setor</title>
+	<title>Lançamento de auditoria - setor</title>
+	<meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
 </head>
 
 <body>
@@ -30,6 +31,12 @@
 		</div>
 
 		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Auditoria: </label>
+					<label class="control-label" th:text="${codigoAuditoria}" id="auditoria"></label> 
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-sm-4">
 					<label class="control-label">Código: </label>
@@ -80,8 +87,16 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<button class="btn btn-primary" type="button" onclick="finalizarAuditoria()">Finalizar auditoria</button>
+				</div>
+			</div>
 		</div>
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/auditoria.finalizar.js}"></script>
+	</th:block>
 </body>
 
 </html>

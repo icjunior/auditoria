@@ -51,7 +51,14 @@
 							<th class="table-cervejas-col-nome">
 								<hti:order page="${pagina}" field="nome" text="Nome" />
 							</th>
-							<th class="table-cervejas-col-acoes"></th>
+							<th class="table-cervejas-col-nome">
+								Início
+							</th>
+							<th class="table-cervejas-col-nome">
+								Final
+							</th>
+							<th class="table-cervejas-col-acoes">Status</th>
+							<th></th>
 						</tr>
 					</thead>
 
@@ -60,6 +67,9 @@
 							
 							<td class="text-center" th:text="${auditoria.codigo}">1</td>
 							<td th:text="${auditoria.nome}">Teste</td>
+							<td th:text="${#temporals.format(auditoria.dataHoraInicio, 'dd/MM/yyyy HH:mm')}">Teste</td>
+							<td th:text="${#temporals.format(auditoria.dataHoraFim, 'dd/MM/yyyy HH:mm')}">Teste</td>
+							<td th:text="${auditoria.finalizado == true ? 'Finalizado' : 'Aberta'}"></td>
 							<td>
 								<a class="btn btn-link btn-xs js-tooltip" title="Lançar" 
 									th:href="@{|/auditorias/lancamento/${auditoria.codigo}|}"> 
