@@ -16,13 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -83,7 +82,7 @@ public class AuditoriaController {
 
 	@Autowired
 	private FechamentoAuditoriaService fechamentoAuditoriaService;
-	
+
 	@Autowired
 	private ComparaUsuarioService comparaUsuarioService;
 
@@ -166,7 +165,7 @@ public class AuditoriaController {
 	@GetMapping("/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}")
 	public ModelAndView lancarResposta(@PathVariable("codigoAuditoria") Auditoria auditoria,
 			@PathVariable("codigoPergunta") Pergunta pergunta) {
-		
+
 		boolean desabilitaBotaoResposta = comparaUsuarioService.desabilitaSalvarResposta(auditoria);
 
 		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaResposta");
@@ -223,9 +222,15 @@ public class AuditoriaController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/fechar")
-	public ResponseEntity<?> fechar(@RequestParam("auditoria") Auditoria auditoria) {
-		fechamentoAuditoriaService.fechar(auditoria);
-		return ResponseEntity.ok().build();
+	@PutMapping(value = "/fechar", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResponseEntity<?> fechar(@RequestBody EmailDTO dadosAuditoria) {
+		Auditoria auditoria = auditorias.findOne(dadosAuditoria.getCodigo());
+
+		try {
+			fechamentoAuditoriaService.fechar(auditoria);
+			return ResponseEntity.ok().build();
+		} catch (RegistroJaCadastradoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 }

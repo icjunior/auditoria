@@ -57,8 +57,10 @@
 							<th class="table-cervejas-col-nome">
 								Final
 							</th>
-							<th class="table-cervejas-col-acoes">Status</th>
-							<th></th>
+							<th class="table-cervejas-col-sku">
+								Status
+							</th>
+							<th class="table-cervejas-col-nome"></th>
 						</tr>
 					</thead>
 
@@ -85,6 +87,11 @@
 									href="#" data:url="@{/auditorias/email}"> 
 									<i class="glyphicon glyphicon-envelope"></i>
 								</a>
+								<a class="btn btn-link btn-xs js-tooltip js-finalizar-btn" title="Finalizar auditoria" 
+									data:objeto="${auditoria.codigo}"
+									href="#" data:url="@{/auditorias/fechar}"> 
+									<i class="glyphicon glyphicon-check"></i>
+								</a>
 							</td>
 						</tr>
 						<tr th:if="${pagina.vazia}">
@@ -99,6 +106,7 @@
 	
 	<th:block layout:fragment="javascript-extra">
 		<script th:src="@{/javascripts/audit.dialog-email.js}"></script>
+		<script th:src="@{/javascripts/audit.finalizar.js}"></script>
 	</th:block>
 </body>
 </html>
