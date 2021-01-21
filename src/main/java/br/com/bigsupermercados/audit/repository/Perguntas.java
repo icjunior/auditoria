@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.bigsupermercados.audit.dto.LancamentoAuditoriaPerguntaDTO;
+import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.model.Pergunta;
 import br.com.bigsupermercados.audit.model.Setor;
 import br.com.bigsupermercados.audit.repository.helper.pergunta.PerguntasQueries;
@@ -32,7 +33,7 @@ public interface Perguntas extends JpaRepository<Pergunta, Long>, PerguntasQueri
 	public List<LancamentoAuditoriaPerguntaDTO> pesquisarPorAuditoriaESetor(
 			@Param("codigoAuditoria") Long codigoAuditoria, @Param("codigoSetor") Long codigoSetor);
 
-	@Query("SELECT p FROM Auditoria a JOIN a.tipos tipo JOIN tipo.setores setor JOIN setor.perguntas p WHERE a.codigo = :codigoAuditoria")
-	public List<Pergunta> pesquisarPerguntasPorAuditoria(@Param("codigoAuditoria") Long codigo);
+	@Query("SELECT p FROM Auditoria a JOIN a.tipos tipo JOIN tipo.setores setor JOIN setor.perguntas p WHERE a = :auditoria")
+	public List<Pergunta> perguntasPorAuditoria(@Param("auditoria") Auditoria auditoria);
 
 }

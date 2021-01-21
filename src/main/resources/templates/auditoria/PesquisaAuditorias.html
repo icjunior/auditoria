@@ -60,6 +60,9 @@
 							<th class="table-cervejas-col-sku">
 								Status
 							</th>
+							<th class="table-cervejas-col-sku">
+								Pontuação
+							</th>
 							<th class="table-cervejas-col-nome"></th>
 						</tr>
 					</thead>
@@ -72,6 +75,7 @@
 							<td th:text="${#temporals.format(auditoria.dataHoraInicio, 'dd/MM/yyyy HH:mm')}">Teste</td>
 							<td th:text="${#temporals.format(auditoria.dataHoraFim, 'dd/MM/yyyy HH:mm')}">Teste</td>
 							<td th:text="${auditoria.finalizado == true ? 'Finalizado' : 'Aberta'}"></td>
+							<td th:text="${auditoria.notaTotal + '%'}"></td>
 							<td>
 								<a class="btn btn-link btn-xs js-tooltip" title="Lançar" 
 									th:href="@{|/auditorias/lancamento/${auditoria.codigo}|}"> 

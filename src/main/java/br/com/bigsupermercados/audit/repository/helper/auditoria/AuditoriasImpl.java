@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.audit.repository.helper.auditoria;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,6 +29,8 @@ import br.com.bigsupermercados.audit.model.Usuario;
 import br.com.bigsupermercados.audit.repository.filter.AuditoriaFilter;
 import br.com.bigsupermercados.audit.repository.paginacao.PaginacaoUtil;
 import br.com.bigsupermercados.audit.security.UsuarioSistema;
+import br.com.bigsupermercados.audit.service.SelecaoPerguntaService;
+import br.com.bigsupermercados.audit.service.SelecaoRespostaService;
 
 public class AuditoriasImpl implements AuditoriasQueries {
 
@@ -36,6 +40,12 @@ public class AuditoriasImpl implements AuditoriasQueries {
 	@Autowired
 	PaginacaoUtil paginacaoUtil;
 
+	@Autowired
+	private SelecaoPerguntaService selecaoPerguntaService;
+
+	@Autowired
+	private SelecaoRespostaService selecaoRespostaService;
+
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
@@ -43,7 +53,23 @@ public class AuditoriasImpl implements AuditoriasQueries {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Auditoria.class);
 		paginacaoUtil.preparar(criteria, pageable);
 		adicionarFiltro(filtro, criteria);
-		return new PageImpl<>(criteria.list(), pageable, total(filtro));
+		Page<Auditoria> registros = new PageImpl<>(criteria.list(), pageable, total(filtro));
+
+		registros.forEach(auditoria -> {
+			BigDecimal maximoPontos = new BigDecimal(
+					(selecaoPerguntaService.perguntasPorAuditoria(auditoria).size()) * 5);
+			BigDecimal pontosAuditoria = selecaoRespostaService.respostasPorAuditoria(auditoria).stream()
+					.map(resposta -> {
+						return new BigDecimal(resposta.getNota());
+					}).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			BigDecimal notaGeral = (pontosAuditoria.multiply(new BigDecimal(100))).divide(maximoPontos, 2,
+					RoundingMode.FLOOR);
+
+			auditoria.setNotaTotal(notaGeral);
+		});
+
+		return registros;
 	}
 
 	private Long total(AuditoriaFilter filtro) {
@@ -103,7 +129,7 @@ public class AuditoriasImpl implements AuditoriasQueries {
 
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Auditoria.class);
 
-		if (!usuario.getGrupos().contains(new Grupo(1L,"Administrador"))) {
+		if (!usuario.getGrupos().contains(new Grupo(1L, "Administrador"))) {
 			criteria.add(Restrictions.eq("loja.codigo", usuario.getLoja().getCodigo()));
 		}
 

@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -56,6 +58,9 @@ public class Auditoria {
 	@ManyToOne
 	@JoinColumn(name = "usuario_codigo")
 	private Usuario usuario;
+
+	@Transient
+	private BigDecimal notaTotal;
 
 	public Long getCodigo() {
 		return codigo;
@@ -135,6 +140,14 @@ public class Auditoria {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public BigDecimal getNotaTotal() {
+		return notaTotal;
+	}
+
+	public void setNotaTotal(BigDecimal notaTotal) {
+		this.notaTotal = notaTotal;
 	}
 
 	@Override
