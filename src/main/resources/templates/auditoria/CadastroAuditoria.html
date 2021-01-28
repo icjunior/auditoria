@@ -61,10 +61,6 @@
 						<thead>
 							<tr>
 								<th class="table-usuarios-col-status">
-									<div class="checkbox aw-checkbox-no-margin">
-										<input type="checkbox" class="js-selecao-todos"/>
-										<label></label>
-									</div>
 								</th>
 								<th class="table-cervejas-col-sku">
 									Código
@@ -78,8 +74,8 @@
 						<tbody>
 							<tr th:each="tipo : ${tipos}">
 								<td>
-									<div class="checkbox aw-checkbox-no-margin">
-										<input type="checkbox" class="js-selecao" th:field="*{tipos}" th:value="${tipo.codigo}"/>
+									<div class="input-group-text">
+										<input type="radio" th:field="*{tipo}" th:value="${tipo.codigo}"/>
 										<label></label>
 									</div>
 								</td>
