@@ -1,23 +1,26 @@
 package br.com.bigsupermercados.audit.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class AuditoriaDTO {
 
 	private String nome;
 	private String loja;
-	private LocalDate data;
 	private Date dataAuditoria;
+	private String dataHoraInicio;
+	private String dataHoraFim;
+	private String nomeAvaliador;
 
-	public AuditoriaDTO(String nome, String loja, LocalDate data) {
+	public AuditoriaDTO(String nome, String loja, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim,
+			String nomeAvaliador) {
 		super();
 		this.nome = nome;
 		this.loja = loja;
-		this.data = data;
+		this.dataHoraInicio = dataHoraInicio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+		this.dataHoraFim = dataHoraFim.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+		this.nomeAvaliador = nomeAvaliador;
 	}
 
 	public String getNome() {
@@ -36,14 +39,6 @@ public class AuditoriaDTO {
 		this.loja = loja;
 	}
 
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
 	public Date getDataAuditoria() {
 		return dataAuditoria;
 	}
@@ -52,7 +47,27 @@ public class AuditoriaDTO {
 		this.dataAuditoria = dataAuditoria;
 	}
 
-	public void transformaData() {
-		dataAuditoria = Date.from(LocalDateTime.of(data, LocalTime.of(0, 0, 0)).atZone(ZoneId.systemDefault()).toInstant());
+	public String getDataHoraInicio() {
+		return dataHoraInicio;
+	}
+
+	public void setDataHoraInicio(String dataHoraInicio) {
+		this.dataHoraInicio = dataHoraInicio;
+	}
+
+	public String getDataHoraFim() {
+		return dataHoraFim;
+	}
+
+	public void setDataHoraFim(String dataHoraFim) {
+		this.dataHoraFim = dataHoraFim;
+	}
+
+	public String getNomeAvaliador() {
+		return nomeAvaliador;
+	}
+
+	public void setNomeAvaliador(String nomeAvaliador) {
+		this.nomeAvaliador = nomeAvaliador;
 	}
 }

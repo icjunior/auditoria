@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -54,6 +55,9 @@ public class Usuario implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "loja_codigo")
 	private Loja loja;
+
+	@OneToMany(mappedBy = "usuario")
+	private List<Auditoria> auditorias;
 
 	private boolean ativo = true;
 
@@ -128,6 +132,14 @@ public class Usuario implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Auditoria> getAuditorias() {
+		return auditorias;
+	}
+
+	public void setAuditorias(List<Auditoria> auditorias) {
+		this.auditorias = auditorias;
 	}
 
 	@Override

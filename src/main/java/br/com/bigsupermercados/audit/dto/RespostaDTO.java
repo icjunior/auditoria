@@ -9,18 +9,16 @@ import java.io.InputStream;
 public class RespostaDTO {
 
 	private String pergunta;
-	private boolean satisfatorio;
 	private String comentario;
 	private String foto;
 	private String contentType;
 	private String setor;
 	private InputStream arquivo;
 
-	public RespostaDTO(String pergunta, boolean satisfatorio, String comentario, String foto, String contentType,
+	public RespostaDTO(String pergunta, String comentario, String foto, String contentType,
 			String setor) {
 		super();
 		this.pergunta = pergunta;
-		this.satisfatorio = satisfatorio;
 		this.comentario = comentario;
 		this.foto = foto;
 		this.contentType = contentType;
@@ -50,14 +48,6 @@ public class RespostaDTO {
 
 	public void setPergunta(String pergunta) {
 		this.pergunta = pergunta;
-	}
-
-	public boolean getSatisfatorio() {
-		return satisfatorio;
-	}
-
-	public void setSatisfatorio(boolean satisfatorio) {
-		this.satisfatorio = satisfatorio;
 	}
 
 	public String getComentario() {

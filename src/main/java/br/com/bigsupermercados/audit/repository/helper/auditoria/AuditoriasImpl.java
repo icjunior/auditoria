@@ -100,8 +100,9 @@ public class AuditoriasImpl implements AuditoriasQueries {
 	@Override
 	public List<RespostaDTO> relatorioPorAuditoria(Long codigoAuditoria) {
 		String jpql = "SELECT "
-				+ "new br.com.bigsupermercados.audit.dto.RespostaDTO(r.pergunta.nome, r.satisfatorio, r.comentario, r.foto, r.contentType, r.pergunta.setor.nome) "
-				+ "from Resposta r " + "WHERE r.auditoria.codigo = :codigoAuditoria "
+				+ "new br.com.bigsupermercados.audit.dto.RespostaDTO(r.pergunta.nome, r.comentario, r.foto, r.contentType, r.pergunta.setor.nome) "
+				+ "from Resposta r " 
+				+ "WHERE r.auditoria.codigo = :codigoAuditoria "
 				+ "ORDER BY r.pergunta.setor.nome";
 
 		List<RespostaDTO> itensFiltrados = manager.createQuery(jpql, RespostaDTO.class)
@@ -112,8 +113,9 @@ public class AuditoriasImpl implements AuditoriasQueries {
 
 	@Override
 	public AuditoriaDTO cabecalhoAuditoria(Long codigoAuditoria) {
-		String jpql = "SELECT " + "new br.com.bigsupermercados.audit.dto.AuditoriaDTO(a.nome, a.loja.apelido, a.data) "
-				+ "from Auditoria a WHERE a.codigo = :codigoAuditoria";
+		String jpql = "SELECT "
+				+ "new br.com.bigsupermercados.audit.dto.AuditoriaDTO(a.nome, a.loja.apelido, a.dataHoraInicio, a.dataHoraFim, u.nome) "
+				+ "from Auditoria a Join a.usuario u WHERE a.codigo = :codigoAuditoria";
 
 		return manager.createQuery(jpql, AuditoriaDTO.class).setParameter("codigoAuditoria", codigoAuditoria)
 				.getSingleResult();

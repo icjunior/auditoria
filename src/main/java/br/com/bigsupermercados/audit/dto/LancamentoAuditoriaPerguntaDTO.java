@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.audit.dto;
 
+import java.math.BigDecimal;
+
 public interface LancamentoAuditoriaPerguntaDTO {
 
 	Long getCodigoPergunta();
@@ -13,5 +15,6 @@ public interface LancamentoAuditoriaPerguntaDTO {
 	Long getCodigoSetor();
 
 	String getSetor();
-
+	
+	BigDecimal getNota();
 }

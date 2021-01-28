@@ -12,4 +12,6 @@ import br.com.bigsupermercados.audit.repository.helper.usuario.UsuariosQueries;
 public interface Usuarios extends JpaRepository<Usuario, Long>, UsuariosQueries{
 
 	public Optional<Usuario> findByLoginIgnoreCase(String login);
+
+	public Usuario findByLogin(String login);
 }

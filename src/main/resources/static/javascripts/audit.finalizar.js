@@ -11,7 +11,7 @@ Brewer.DialogoFinalizar = (function() {
 		
 		if (window.location.search.indexOf('enviado') > -1) {
 			console.log('devo mostrar a mensagem de enviado com sucesso');
-			swal('Pronto!', 'O e-mail foi enviado com sucesso!', 'success');
+			swal('Pronto!', 'Auditoria finalizada com sucesso!', 'success');
 		}
 	}
 

@@ -27,6 +27,9 @@ public class Tipo {
 	@OneToMany(mappedBy = "tipo")
 	private List<Setor> setores;
 
+	@OneToMany(mappedBy = "tipo")
+	private List<Auditoria> auditorias;
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -53,6 +56,14 @@ public class Tipo {
 
 	public boolean isNovo() {
 		return codigo == null;
+	}
+
+	public List<Auditoria> getAuditorias() {
+		return auditorias;
+	}
+
+	public void setAuditorias(List<Auditoria> auditorias) {
+		this.auditorias = auditorias;
 	}
 
 	@Override

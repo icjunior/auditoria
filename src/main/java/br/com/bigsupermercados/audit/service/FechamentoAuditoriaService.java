@@ -28,13 +28,13 @@ public class FechamentoAuditoriaService {
 		Integer quantidadeRepostas = selecaoRespostaService.respostasPorAuditoria(auditoria).size();
 		Integer quantidadePerguntas = selecaoPerguntaService.perguntasPorAuditoria(auditoria).size();
 
-		if (quantidadePerguntas.equals(quantidadeRepostas)) {
-			auditoria.setFinalizado(true);
-			auditoria.setDataHoraFim(LocalDateTime.now());
-			repository.saveAndFlush(auditoria);
+		if (!quantidadePerguntas.equals(quantidadeRepostas)) {
+			throw new RegistroJaCadastradoException(
+					"Existem perguntas sem respostas. Favor revise-as e tente finalizar novamente.");			
 		}
-
-		throw new RegistroJaCadastradoException(
-				"Existem perguntas sem respostas. Favor revise-as e tente finalizar novamente.");
+		
+		auditoria.setFinalizado(true);
+		auditoria.setDataHoraFim(LocalDateTime.now());
+		repository.saveAndFlush(auditoria);
 	}
 }

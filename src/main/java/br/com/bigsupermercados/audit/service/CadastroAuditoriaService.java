@@ -31,15 +31,17 @@ public class CadastroAuditoriaService {
 		if (tipoOptional.isPresent()) {
 			throw new RegistroJaCadastradoException("Auditoria já cadastrada");
 		}
+
 		return auditorias.saveAndFlush(auditoria);
 	}
 
 	@Transactional
 	public Resposta salvarResposta(Resposta resposta) {
-		if(resposta.getNota() <= 4 && resposta.getComentario() == "") {
-			throw new RegistroJaCadastradoException("Notas menores ou igual a 4 não podem ficar sem uma justificativa.");
+		if (resposta.getNota() <= 4 && resposta.getComentario() == "") {
+			throw new RegistroJaCadastradoException(
+					"Notas menores ou igual a 4 não podem ficar sem uma justificativa.");
 		}
-		
+
 		return respostas.saveAndFlush(resposta);
 	}
 

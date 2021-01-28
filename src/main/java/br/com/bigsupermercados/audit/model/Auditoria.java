@@ -40,8 +40,12 @@ public class Auditoria {
 	@JoinTable(name = "auditoria_tipo", joinColumns = @JoinColumn(name = "codigo_auditoria"), inverseJoinColumns = @JoinColumn(name = "codigo_tipo"))
 	private List<Tipo> tipos;
 
+	@ManyToOne
+	@JoinColumn(name = "tipo_codigo")
+	private Tipo tipo;
+
 	@Column(name = "finalizado")
-	private Boolean finalizado;
+	private Boolean finalizado = false;
 
 	@OneToMany(mappedBy = "auditoria")
 	private List<Resposta> respostas;
@@ -148,6 +152,14 @@ public class Auditoria {
 
 	public void setNotaTotal(BigDecimal notaTotal) {
 		this.notaTotal = notaTotal;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
