@@ -53,18 +53,22 @@ public class AuditoriasImpl implements AuditoriasQueries {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Auditoria.class);
 		paginacaoUtil.preparar(criteria, pageable);
 		adicionarFiltro(filtro, criteria);
+		// adicionarFiltroVersaoNova(criteria);
 		Page<Auditoria> registros = new PageImpl<>(criteria.list(), pageable, total(filtro));
 
 		registros.forEach(auditoria -> {
 			BigDecimal maximoPontos = new BigDecimal(
 					(selecaoPerguntaService.perguntasPorAuditoria(auditoria).size()) * 5);
+
+			System.out.println("Auditoria: " + auditoria.getCodigo() + " e número de pontos: " + maximoPontos);
+
 			BigDecimal pontosAuditoria = selecaoRespostaService.respostasPorAuditoria(auditoria).stream()
 					.map(resposta -> {
 						return new BigDecimal(resposta.getNota());
 					}).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-			BigDecimal notaGeral = (pontosAuditoria.multiply(new BigDecimal(100))).divide(maximoPontos, 2,
-					RoundingMode.FLOOR);
+			BigDecimal notaGeral = (pontosAuditoria.multiply(new BigDecimal(100)))
+					.divide(maximoPontos.equals(BigDecimal.ZERO) ? BigDecimal.ONE : maximoPontos, 2, RoundingMode.FLOOR);
 
 			auditoria.setNotaTotal(notaGeral);
 		});
@@ -75,6 +79,7 @@ public class AuditoriasImpl implements AuditoriasQueries {
 	private Long total(AuditoriaFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Auditoria.class);
 		adicionarFiltro(filtro, criteria);
+//		adicionarFiltroVersaoNova(criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();
 	}
@@ -86,6 +91,10 @@ public class AuditoriasImpl implements AuditoriasQueries {
 			}
 		}
 	}
+
+//	private void adicionarFiltroVersaoNova(Criteria criteria) {
+//		criteria.add(Restrictions.eq("versaoNova", true));
+//	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -101,8 +110,7 @@ public class AuditoriasImpl implements AuditoriasQueries {
 	public List<RespostaDTO> relatorioPorAuditoria(Long codigoAuditoria) {
 		String jpql = "SELECT "
 				+ "new br.com.bigsupermercados.audit.dto.RespostaDTO(r.pergunta.nome, r.comentario, r.foto, r.contentType, r.pergunta.setor.nome) "
-				+ "from Resposta r " 
-				+ "WHERE r.auditoria.codigo = :codigoAuditoria "
+				+ "from Resposta r " + "WHERE r.auditoria.codigo = :codigoAuditoria "
 				+ "ORDER BY r.pergunta.setor.nome";
 
 		List<RespostaDTO> itensFiltrados = manager.createQuery(jpql, RespostaDTO.class)

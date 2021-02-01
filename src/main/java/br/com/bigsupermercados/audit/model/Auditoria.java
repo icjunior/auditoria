@@ -63,6 +63,9 @@ public class Auditoria {
 	@JoinColumn(name = "usuario_codigo")
 	private Usuario usuario;
 
+	@Column(name = "versao_nova")
+	private boolean versaoNova = true;
+
 	@Transient
 	private BigDecimal notaTotal;
 
@@ -160,6 +163,14 @@ public class Auditoria {
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
+	}
+
+	public boolean isVersaoNova() {
+		return versaoNova;
+	}
+
+	public void setVersaoNova(boolean versaoNova) {
+		this.versaoNova = versaoNova;
 	}
 
 	@Override
