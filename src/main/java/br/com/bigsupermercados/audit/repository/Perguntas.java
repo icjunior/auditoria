@@ -23,8 +23,8 @@ public interface Perguntas extends JpaRepository<Pergunta, Long>, PerguntasQueri
 
 	@Query(value = "select pergunta.codigo as \"codigoPergunta\", pergunta.nome as pergunta, resposta_auditoria.nota as avaliacao, "
 			+ "auditoria.codigo as \"codigoAuditoria\", setor.codigo as \"codigoSetor\", setor.nome as setor "
-			+ "from auditoria " + "inner join auditoria_tipo on auditoria.codigo = auditoria_tipo.codigo_auditoria "
-			+ "inner join tipo on auditoria_tipo.codigo_tipo = tipo.codigo "
+			+ "from auditoria "
+			+ "inner join tipo on auditoria.tipo_codigo = tipo.codigo "
 			+ "inner join setor on tipo.codigo = setor.tipo_codigo "
 			+ "inner join pergunta on setor.codigo = pergunta.setor_codigo "
 			+ "left join resposta_auditoria on pergunta.codigo = resposta_auditoria.pergunta_codigo "
