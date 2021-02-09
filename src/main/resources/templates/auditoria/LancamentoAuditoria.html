@@ -69,23 +69,23 @@
 					</thead>
 	
 					<tbody>
-							<tr th:each="tipo : ${auditoria.tipos}">
+							<tr>
 								<td class="text-center">
 									<a 	href="#"
-										th:href="@{/auditorias/lancamentoSetor/{codigoAuditoria}/{codigoTipo}/(codigoAuditoria=${auditoria.codigo}, codigoTipo=${tipo.codigo})}" 
-										th:text="${tipo.codigo}">
+										th:href="@{/auditorias/lancamentoSetor/{codigoAuditoria}/{codigoTipo}/(codigoAuditoria=${auditoria.codigo}, codigoTipo=${auditoria.tipo.codigo})}" 
+										th:text="${auditoria.tipo.codigo}">
 									</a>
 								</td>
 								<td> 
 									<a	href="#"
-										th:href="@{/auditorias/lancamentoSetor/{codigoAuditoria}/{codigoTipo}/(codigoAuditoria=${auditoria.codigo}, codigoTipo=${tipo.codigo})}"
-										th:text="${tipo.nome}">
+										th:href="@{/auditorias/lancamentoSetor/{codigoAuditoria}/{codigoTipo}/(codigoAuditoria=${auditoria.codigo}, codigoTipo=${auditoria.tipo.codigo})}"
+										th:text="${auditoria.tipo.nome}">
 									</a>
 							    </td>
 							</tr>
-							<tr th:if="${#lists.isEmpty(auditoria.tipos)}">
+							<!-- <tr th:if="${#lists.isEmpty(auditoria.tipos)}">
 								<td colspan="7">Nenhum tipo encontrado</td>
-							</tr>
+							</tr> -->
 					</tbody>
 				</table>
 			</div>

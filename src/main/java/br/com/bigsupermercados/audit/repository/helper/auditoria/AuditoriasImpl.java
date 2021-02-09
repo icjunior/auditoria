@@ -60,8 +60,6 @@ public class AuditoriasImpl implements AuditoriasQueries {
 			BigDecimal maximoPontos = new BigDecimal(
 					(selecaoPerguntaService.perguntasPorAuditoria(auditoria).size()) * 5);
 
-			System.out.println("Auditoria: " + auditoria.getCodigo() + " e número de pontos: " + maximoPontos);
-
 			BigDecimal pontosAuditoria = selecaoRespostaService.respostasPorAuditoria(auditoria).stream()
 					.map(resposta -> {
 						return new BigDecimal(resposta.getNota());
