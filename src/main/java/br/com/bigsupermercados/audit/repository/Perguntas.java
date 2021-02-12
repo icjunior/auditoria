@@ -29,7 +29,8 @@ public interface Perguntas extends JpaRepository<Pergunta, Long>, PerguntasQueri
 			+ "inner join pergunta on setor.codigo = pergunta.setor_codigo "
 			+ "left join resposta_auditoria on pergunta.codigo = resposta_auditoria.pergunta_codigo "
 			+ "and auditoria.codigo = resposta_auditoria.auditoria_codigo "
-			+ "where auditoria.codigo = :codigoAuditoria and setor.codigo = :codigoSetor", nativeQuery = true)
+			+ "where auditoria.codigo = :codigoAuditoria and setor.codigo = :codigoSetor "
+			+ "and pergunta.ativo = true", nativeQuery = true)
 	public List<LancamentoAuditoriaPerguntaDTO> pesquisarPorAuditoriaESetor(
 			@Param("codigoAuditoria") Long codigoAuditoria, @Param("codigoSetor") Long codigoSetor);
 
