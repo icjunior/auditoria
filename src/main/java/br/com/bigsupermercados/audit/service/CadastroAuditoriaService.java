@@ -23,6 +23,9 @@ public class CadastroAuditoriaService {
 
 	@Autowired
 	private Respostas respostas;
+	
+	@Autowired
+	private CadastroFotoService cadastroFotoService;
 
 	@Transactional
 	public Auditoria salvar(Auditoria auditoria) {
@@ -41,6 +44,8 @@ public class CadastroAuditoriaService {
 			throw new RegistroJaCadastradoException(
 					"Notas menores ou igual a 4 não podem ficar sem uma justificativa.");
 		}
+		
+		cadastroFotoService.gravar(resposta);
 
 		return respostas.saveAndFlush(resposta);
 	}

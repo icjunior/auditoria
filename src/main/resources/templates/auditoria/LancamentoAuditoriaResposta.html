@@ -66,22 +66,24 @@
 				<div class="row">
 					<div class="form-group col-sm-12" hti:classforerror="comentario">
 						<label class="control-label" for="comentario">Comentários:</label>
-						<textarea cols="20" rows="5" class="form-control" th:field="*{comentario}" id="comentario" >
+						<textarea cols="20" rows="5" th:field="*{comentario}" class="form-control" >
 						</textarea> 
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12">
-						<input type="hidden" th:field="*{foto}"> <input
+						<input type="hidden" th:field="*{files}"> <input
 							type="hidden" th:field="*{contentType}"> <label
 							class="control-label">Foto</label>
 
 						<div class="js-container-foto-cerveja"
 							th:attr="data-url-fotos=@{/fotos}">
 							<div id="upload-drop" class="bw-upload">
-								<i class="glyphicon glyphicon-cloud-upload"></i> <span>Arraste
-									a foto aqui ou </span> <a class="bw-upload-form-file">selecione <input
-									type="file" id="upload-select" accept=".jpg,.jpeg,.png" /></a>
+								<i class="glyphicon glyphicon-cloud-upload"></i> 
+								<span>Arraste a foto aqui ou </span> 
+								<a class="bw-upload-form-file">selecione 
+									<input type="file" id="upload-select" accept=".jpg,.jpeg,.png" />
+								</a>
 							</div>
 						</div>
 					</div>
@@ -95,16 +97,15 @@
 	</section>
 	
 	<th:block layout:fragment="javascript-extra">
-		<script th:src="@{/javascripts/estilo.cadastro-rapido.js}"></script>
 		<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
 		<script th:src="@{/javascripts/vendors/upload.min.js}"></script>
 		<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
 		<script th:src="@{/javascripts/imagem.upload-foto.js}"></script>
-		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+<!-- 		<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
 		<script>
 			$('.js-status').bootstrapSwitch();
 		</script>
-	</th:block>
+ -->	</th:block>
 </body>
 
 </html>

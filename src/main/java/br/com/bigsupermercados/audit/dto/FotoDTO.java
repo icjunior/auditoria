@@ -25,5 +25,4 @@ public class FotoDTO {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-
 }

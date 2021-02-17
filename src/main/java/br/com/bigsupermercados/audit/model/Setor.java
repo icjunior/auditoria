@@ -2,6 +2,7 @@ package br.com.bigsupermercados.audit.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,10 @@ public class Setor {
 
 	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
 	private List<Pergunta> perguntas;
-	
+
+	@Column(name = "ativo")
+	private boolean ativo = true;
+
 	public boolean isNovo() {
 		return codigo == null;
 	}
@@ -71,8 +75,16 @@ public class Setor {
 	public void setPerguntas(List<Pergunta> perguntas) {
 		this.perguntas = perguntas;
 	}
-	
+
 	public Integer getQuantidadePerguntas() {
 		return this.perguntas.size();
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 }

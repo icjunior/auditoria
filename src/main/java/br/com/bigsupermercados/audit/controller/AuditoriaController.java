@@ -43,7 +43,6 @@ import br.com.bigsupermercados.audit.repository.Setores;
 import br.com.bigsupermercados.audit.repository.Tipos;
 import br.com.bigsupermercados.audit.repository.filter.AuditoriaFilter;
 import br.com.bigsupermercados.audit.service.CadastroAuditoriaService;
-import br.com.bigsupermercados.audit.service.ComparaUsuarioService;
 import br.com.bigsupermercados.audit.service.FechamentoAuditoriaService;
 import br.com.bigsupermercados.audit.service.InicioAuditoriaService;
 import br.com.bigsupermercados.audit.service.exception.ImpossivelExcluirEntidadeException;
@@ -82,9 +81,6 @@ public class AuditoriaController {
 
 	@Autowired
 	private FechamentoAuditoriaService fechamentoAuditoriaService;
-
-	@Autowired
-	private ComparaUsuarioService comparaUsuarioService;
 
 	@RequestMapping("/novo")
 	public ModelAndView novo(Auditoria auditoria) {
@@ -163,16 +159,17 @@ public class AuditoriaController {
 	}
 
 	@GetMapping("/lancamentoResposta/{codigoAuditoria}/{codigoPergunta}")
-	public ModelAndView lancarResposta(@PathVariable("codigoAuditoria") Auditoria auditoria,
-			@PathVariable("codigoPergunta") Pergunta pergunta) {
+	public ModelAndView lancarResposta(@PathVariable("codigoAuditoria") Long codigoAuditoria,
+			@PathVariable("codigoPergunta") Long codigoPergunta) {
 
-		boolean desabilitaBotaoResposta = comparaUsuarioService.desabilitaSalvarResposta(auditoria);
-
-		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaResposta");
-		Optional<Resposta> respostaOptional = respostas.findByPerguntaCodigoAndAuditoriaCodigo(pergunta.getCodigo(),
-				auditoria.getCodigo());
+		Auditoria auditoria = auditorias.findOne(codigoAuditoria);
+		Pergunta pergunta = perguntas.findOne(codigoPergunta);
 
 		Resposta resposta;
+		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaResposta");
+
+		Optional<Resposta> respostaOptional = respostas.findByPerguntaCodigoAndAuditoriaCodigo(pergunta.getCodigo(),
+				auditoria.getCodigo());
 
 		if (respostaOptional.isPresent()) {
 			resposta = respostaOptional.get();
@@ -181,8 +178,6 @@ public class AuditoriaController {
 		}
 
 		mv.addObject("respostaAuditoria", resposta);
-		mv.addObject("desabilitaBotaoResposta", desabilitaBotaoResposta);
-
 		return mv;
 	}
 
@@ -194,7 +189,8 @@ public class AuditoriaController {
 			cadastroAuditoriaService.salvarResposta(respostaAuditoria);
 		} catch (RegistroJaCadastradoException e) {
 			result.rejectValue("comentario", e.getMessage(), e.getMessage());
-			return lancarResposta(respostaAuditoria.getAuditoria(), respostaAuditoria.getPergunta());
+			return lancarResposta(respostaAuditoria.getAuditoria().getCodigo(),
+					respostaAuditoria.getPergunta().getCodigo());
 		}
 
 		attributes.addFlashAttribute("mensagem",

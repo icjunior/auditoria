@@ -29,12 +29,14 @@ public class CadastroSetorService {
 
 		return setores.saveAndFlush(setor);
 	}
-	
+
 	@Transactional
 	public void excluir(Setor setor) {
 		try {
-			setores.delete(setor);
-			setores.flush();
+//			setores.delete(setor);
+			setor.setAtivo(false);
+			setores.save(setor);
+//			setores.flush();
 		} catch (PersistenceException e) {
 			throw new ImpossivelExcluirEntidadeException("Impossível apagar setor. Já foi usada em algum momento");
 		}

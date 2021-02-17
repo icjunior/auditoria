@@ -13,7 +13,7 @@ import br.com.bigsupermercados.audit.repository.helper.resposta.RespostasQueries
 @Repository
 public interface Respostas extends JpaRepository<Resposta, Long>, RespostasQueries {
 
-	public Optional<Resposta> findByPerguntaCodigoAndAuditoriaCodigo(Long codigo, Long codigo2);
+	public Optional<Resposta> findByPerguntaCodigoAndAuditoriaCodigo(Long codigoPergunta, Long codigoAuditoria);
 
 	public List<Resposta> findByAuditoria(Auditoria auditoria);
 }
