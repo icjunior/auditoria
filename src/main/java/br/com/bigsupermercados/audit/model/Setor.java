@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +33,7 @@ public class Setor {
 	@JoinColumn(name = "tipo_codigo")
 	private Tipo tipo;
 
-	@OneToMany(mappedBy = "setor", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "setor")
 	private List<Pergunta> perguntas;
 
 	@Column(name = "ativo")
@@ -76,9 +75,9 @@ public class Setor {
 		this.perguntas = perguntas;
 	}
 
-	public Integer getQuantidadePerguntas() {
-		return this.perguntas.size();
-	}
+//	public Integer getQuantidadePerguntas() {
+//		return this.perguntas.size();
+//	}
 
 	public boolean isAtivo() {
 		return ativo;

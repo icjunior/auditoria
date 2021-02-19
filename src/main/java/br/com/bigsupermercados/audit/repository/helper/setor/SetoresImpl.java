@@ -34,6 +34,7 @@ public class SetoresImpl implements SetoresQueries {
 	public Page<Setor> filtrar(SetorFilter filtro, Pageable pageable) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Setor.class);
 		paginacaoUtil.preparar(criteria, pageable);
+		filtrarAtivos(filtro, criteria);
 		adicionarFiltro(filtro, criteria);
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
@@ -43,6 +44,10 @@ public class SetoresImpl implements SetoresQueries {
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();
+	}
+	
+	private void filtrarAtivos(SetorFilter filtro, Criteria criteria) {
+		criteria.add(Restrictions.eq("ativo", true));
 	}
 
 	private void adicionarFiltro(SetorFilter filtro, Criteria criteria) {

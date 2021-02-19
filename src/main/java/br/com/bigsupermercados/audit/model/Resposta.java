@@ -1,7 +1,9 @@
 package br.com.bigsupermercados.audit.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
@@ -16,6 +18,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "resposta_auditoria")
 public class Resposta {
@@ -36,8 +43,6 @@ public class Resposta {
 
 	private Integer nota = 0;
 
-//	private String foto;
-
 	private Boolean satisfatorio;
 
 	@OneToMany(mappedBy = "resposta", fetch = FetchType.EAGER)
@@ -50,7 +55,10 @@ public class Resposta {
 	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	@Transient
-	private List<String> files;
+	private String files;
+
+	@Transient
+	private List<String> arquivos;
 
 	public Resposta() {
 
@@ -62,95 +70,49 @@ public class Resposta {
 		this.auditoria = auditoria;
 	}
 
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public Pergunta getPergunta() {
-		return pergunta;
-	}
-
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
-	}
-
-	public Auditoria getAuditoria() {
-		return auditoria;
-	}
-
-	public void setAuditoria(Auditoria auditoria) {
-		this.auditoria = auditoria;
-	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
-	public Integer getNota() {
-		return nota;
-	}
-
-	public void setNota(Integer nota) {
-		this.nota = nota;
-	}
-
-//	public String getFoto() {
-//		return foto;
-//	}
-//
-//	public void setFoto(String foto) {
-//		this.foto = foto;
-//	}
-
-	public Boolean getSatisfatorio() {
-		return satisfatorio;
-	}
-
-	public void setSatisfatorio(Boolean satisfatorio) {
-		this.satisfatorio = satisfatorio;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public LocalDateTime getDataHoraInclusao() {
-		return dataHoraInclusao;
-	}
-
-	public void setDataHoraInclusao(LocalDateTime dataHoraInclusao) {
-		this.dataHoraInclusao = dataHoraInclusao;
-	}
-
-	public List<Foto> getFotos() {
-		return fotos;
-	}
-
-	public void setFotos(List<Foto> fotos) {
-		this.fotos = fotos;
-	}
-
-	public List<String> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<String> files) {
-		this.files = files;
-	}
-
 	public void converteFoto() {
-		this.fotos = files.stream().map(Foto::new).collect(Collectors.toList());
+
+		String[] arquivos = this.files.split(",");
+
+		List<String> arquivosList = new ArrayList<>();
+
+		for (int i = 0; i < arquivos.length; i++) {
+			arquivosList.add(arquivos[i]);
+		}
+
+		this.fotos = arquivosList.stream().map(Foto::new).collect(Collectors.toList());
+	}
+
+	public void populaFiles() {
+		StringJoiner str = new StringJoiner(",");
+		this.fotos.stream().forEach(foto -> {
+			str.add(foto.getCaminho());
+		});
+		files = str.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Resposta other = (Resposta) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
 	}
 }

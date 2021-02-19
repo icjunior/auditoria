@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.audit.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,17 @@ public class CadastroFotoService {
 	private FotoRepository repository;
 
 	public void gravar(Resposta resposta) {
-		resposta.converteFoto();
 		resposta.getFotos().stream().forEach(foto -> foto.setResposta(resposta));
 
 		List<Foto> fotos = resposta.getFotos();
-
-		repository.save(fotos);
+		
+		fotos.stream().forEach(foto -> {
+			Optional<Foto> fotoOpt = repository.findByCaminhoAndResposta_Codigo(foto.getCaminho(),
+					foto.getResposta().getCodigo());
+			
+			if(!fotoOpt.isPresent()) {
+				repository.save(foto);
+			}
+		});
 	}
 }

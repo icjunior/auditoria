@@ -173,6 +173,7 @@ public class AuditoriaController {
 
 		if (respostaOptional.isPresent()) {
 			resposta = respostaOptional.get();
+			resposta.populaFiles();
 		} else {
 			resposta = new Resposta(pergunta, auditoria);
 		}

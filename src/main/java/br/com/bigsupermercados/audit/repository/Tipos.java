@@ -12,4 +12,5 @@ import br.com.bigsupermercados.audit.repository.helper.tipo.TiposQueries;
 public interface Tipos extends JpaRepository<Tipo, Long>, TiposQueries{
 
 	public Optional<Tipo> findByNomeIgnoreCase(String nome);
+
 }
