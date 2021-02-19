@@ -140,6 +140,8 @@ public class AuditoriasImpl implements AuditoriasQueries {
 		if (!usuario.getGrupos().contains(new Grupo(1L, "Administrador"))) {
 			criteria.add(Restrictions.eq("loja.codigo", usuario.getLoja().getCodigo()));
 		}
+		
+		criteria.add(Restrictions.eq("finalizado", true));
 
 		return criteria.list();
 	}

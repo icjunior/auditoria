@@ -20,13 +20,15 @@ public class CadastroFotoService {
 		resposta.getFotos().stream().forEach(foto -> foto.setResposta(resposta));
 
 		List<Foto> fotos = resposta.getFotos();
-		
+
 		fotos.stream().forEach(foto -> {
-			Optional<Foto> fotoOpt = repository.findByCaminhoAndResposta_Codigo(foto.getCaminho(),
-					foto.getResposta().getCodigo());
-			
-			if(!fotoOpt.isPresent()) {
-				repository.save(foto);
+			if (!foto.getCaminho().equals("")) {
+				Optional<Foto> fotoOpt = repository.findByCaminhoAndResposta_Codigo(foto.getCaminho(),
+						foto.getResposta().getCodigo());
+
+				if (!fotoOpt.isPresent()) {
+					repository.save(foto);
+				}
 			}
 		});
 	}
