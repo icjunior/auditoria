@@ -37,4 +37,7 @@ public interface Perguntas extends JpaRepository<Pergunta, Long>, PerguntasQueri
 	@Query("SELECT p FROM Auditoria a JOIN a.tipo tipo JOIN tipo.setores setor JOIN setor.perguntas p WHERE a = :auditoria AND a.versaoNova = true AND p.ativo = true")
 	public List<Pergunta> perguntasPorAuditoria(@Param("auditoria") Auditoria auditoria);
 
+	@Query("SELECT p FROM Pergunta p JOIN p.setor s WHERE s = :setor AND p.ativo = true")
+	public List<Pergunta> perguntasPorSetor(@Param("setor") Setor setor);
+
 }

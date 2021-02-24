@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,6 +40,9 @@ public class Setor {
 
 	@Column(name = "ativo")
 	private boolean ativo = true;
+
+	@Transient
+	private BigDecimal nota;
 
 	public boolean isNovo() {
 		return codigo == null;
@@ -85,5 +90,13 @@ public class Setor {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public BigDecimal getNota() {
+		return nota;
+	}
+
+	public void setNota(BigDecimal nota) {
+		this.nota = nota;
 	}
 }

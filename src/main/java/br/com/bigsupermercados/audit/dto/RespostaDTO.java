@@ -5,26 +5,27 @@ import static java.nio.file.FileSystems.getDefault;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class RespostaDTO {
 
+	private Long codigo;
 	private String pergunta;
 	private String comentario;
 	private String foto;
+	private List<String> fotos;
 	private String contentType;
 	private String setor;
 	private InputStream arquivo;
+	private List<InputStream> arquivos;
 
-	public RespostaDTO(String pergunta, String comentario, String foto, String contentType,
-			String setor) {
+	public RespostaDTO(Long codigo, String pergunta, String comentario, String contentType, String setor) {
 		super();
+		this.codigo = codigo;
 		this.pergunta = pergunta;
 		this.comentario = comentario;
-		this.foto = foto;
 		this.contentType = contentType;
 		this.setor = setor;
-
-		// validaFoto(this.foto);
 	}
 
 	private void validaFoto(String foto) {
@@ -81,6 +82,30 @@ public class RespostaDTO {
 
 	public void setSetor(String setor) {
 		this.setor = setor;
+	}
+
+	public List<String> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<String> fotos) {
+		this.fotos = fotos;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
+	public List<InputStream> getArquivos() {
+		return arquivos;
+	}
+
+	public void setArquivos(List<InputStream> arquivos) {
+		this.arquivos = arquivos;
 	}
 
 	@Override

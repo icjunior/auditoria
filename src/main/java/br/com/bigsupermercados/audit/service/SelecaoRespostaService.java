@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.model.Resposta;
+import br.com.bigsupermercados.audit.model.Setor;
 import br.com.bigsupermercados.audit.repository.Respostas;
 
 @Service
@@ -17,5 +18,9 @@ public class SelecaoRespostaService {
 
 	public List<Resposta> respostasPorAuditoria(Auditoria auditoria) {
 		return repository.findByAuditoria(auditoria);
+	}
+	
+	public List<Resposta> respostasPorSetor(Setor setor, Long codigoAuditoria) {
+		return repository.respostasPorSetor(setor, codigoAuditoria);
 	}
 }

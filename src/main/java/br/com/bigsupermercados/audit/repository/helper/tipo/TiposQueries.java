@@ -10,5 +10,5 @@ public interface TiposQueries {
 
 	public Page<Tipo> filtrar(TipoFilter filtro, Pageable pageable);
 	
-	public Tipo filtrarPorCodigo(Long codigoTipo);
+	public Tipo filtrarPorCodigo(Long codigoTipo, Long codigoAuditoria);
 }

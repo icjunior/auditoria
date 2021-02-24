@@ -15,6 +15,7 @@ import br.com.bigsupermercados.audit.dto.AuditoriaDTO;
 import br.com.bigsupermercados.audit.dto.RespostaDTO;
 import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.repository.Auditorias;
+import br.com.bigsupermercados.audit.repository.FotoRepository;
 import br.com.bigsupermercados.audit.storage.FotoStorage;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRParameter;
@@ -38,17 +39,18 @@ public class RelatorioService {
 
 	@Autowired
 	private SelecaoRespostaService selecaoRespostaService;
-
+	
 	public byte[] gerarRelatorioPorAuditoria(Long codigoAuditoria) throws Exception {
 		AuditoriaDTO auditoria = auditorias.cabecalhoAuditoria(codigoAuditoria);
 		BigDecimal notaGeral = calculaNotaGeral(codigoAuditoria);
 		BigDecimal notaGeralAnterior = calculaNotaGeralAnterior(codigoAuditoria);
 
-		List<RespostaDTO> auditoriaList = auditorias.relatorioPorAuditoria(codigoAuditoria);
-
-		auditoriaList.forEach(a -> {
-			if (!a.getFoto().equals("")) {
-				a.setArquivo(new ByteArrayInputStream(fotoStorage.recuperaFotoTemporariaRelatorio(a.getFoto())));
+		List<RespostaDTO> respostaDTO = auditorias.relatorioPorAuditoria(codigoAuditoria);
+		
+		respostaDTO.forEach(resposta -> {
+			if (!resposta.getFoto().equals("")) {
+				resposta.setArquivo(
+						new ByteArrayInputStream(fotoStorage.recuperaFotoTemporariaRelatorio(resposta.getFoto())));
 			}
 		});
 
@@ -66,7 +68,7 @@ public class RelatorioService {
 		parametros.put("notaGeralAnterior", notaGeralAnterior);
 		parametros.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
 
-		JRDataSource jrDataSource = new JRBeanCollectionDataSource(auditoriaList);
+		JRDataSource jrDataSource = new JRBeanCollectionDataSource(respostaDTO);
 
 		InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/relatorio_auditoria_novo.jasper");
 

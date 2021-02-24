@@ -134,7 +134,7 @@ public class AuditoriaController {
 
 	@GetMapping("/lancamentoSetor/{codigoAuditoria}/{codigoTipo}")
 	public ModelAndView lancarDetalhe(@PathVariable Long codigoAuditoria, @PathVariable Long codigoTipo) {
-		Tipo tipo = tipos.filtrarPorCodigo(codigoTipo);
+		Tipo tipo = tipos.filtrarPorCodigo(codigoTipo, codigoAuditoria);
 
 		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaSetor");
 		mv.addObject("tipo", tipo);
@@ -162,19 +162,18 @@ public class AuditoriaController {
 	public ModelAndView lancarResposta(@PathVariable("codigoAuditoria") Long codigoAuditoria,
 			@PathVariable("codigoPergunta") Long codigoPergunta) {
 
-		Auditoria auditoria = auditorias.findOne(codigoAuditoria);
-		Pergunta pergunta = perguntas.findOne(codigoPergunta);
-
 		Resposta resposta;
 		ModelAndView mv = new ModelAndView("auditoria/LancamentoAuditoriaResposta");
 
-		Optional<Resposta> respostaOptional = respostas.findByPerguntaCodigoAndAuditoriaCodigo(pergunta.getCodigo(),
-				auditoria.getCodigo());
+		Optional<Resposta> respostaOptional = respostas.findByPerguntaCodigoAndAuditoriaCodigo(codigoPergunta,
+				codigoAuditoria);
 
 		if (respostaOptional.isPresent()) {
 			resposta = respostaOptional.get();
 			resposta.populaFiles();
 		} else {
+			Auditoria auditoria = auditorias.findOne(codigoAuditoria);
+			Pergunta pergunta = perguntas.findOne(codigoPergunta);
 			resposta = new Resposta(pergunta, auditoria);
 		}
 
