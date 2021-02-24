@@ -17,7 +17,6 @@ public class RespostaDTO {
 	private String contentType;
 	private String setor;
 	private InputStream arquivo;
-	private List<InputStream> arquivos;
 
 	public RespostaDTO(Long codigo, String pergunta, String comentario, String contentType, String setor) {
 		super();
@@ -98,14 +97,6 @@ public class RespostaDTO {
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
-	}
-
-	public List<InputStream> getArquivos() {
-		return arquivos;
-	}
-
-	public void setArquivos(List<InputStream> arquivos) {
-		this.arquivos = arquivos;
 	}
 
 	@Override

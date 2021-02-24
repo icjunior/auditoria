@@ -86,7 +86,7 @@ public class PerguntaController {
 
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
-		Pergunta pergunta = perguntas.getOne(codigo);
+		Pergunta pergunta = perguntas.findOne(codigo);
 
 		ModelAndView mv = novo(pergunta);
 		mv.addObject("pergunta", pergunta);
@@ -96,7 +96,7 @@ public class PerguntaController {
 
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Pergunta pergunta = perguntas.getOne(codigo);
+		Pergunta pergunta = perguntas.findOne(codigo);
 		try {
 			cadastroPerguntaService.excluir(pergunta);
 		} catch (ImpossivelExcluirEntidadeException e) {

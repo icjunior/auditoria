@@ -15,7 +15,6 @@ import br.com.bigsupermercados.audit.dto.AuditoriaDTO;
 import br.com.bigsupermercados.audit.dto.RespostaDTO;
 import br.com.bigsupermercados.audit.model.Auditoria;
 import br.com.bigsupermercados.audit.repository.Auditorias;
-import br.com.bigsupermercados.audit.repository.FotoRepository;
 import br.com.bigsupermercados.audit.storage.FotoStorage;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRParameter;
