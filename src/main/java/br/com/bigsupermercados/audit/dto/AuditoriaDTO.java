@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.audit.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -12,15 +13,17 @@ public class AuditoriaDTO {
 	private String dataHoraInicio;
 	private String dataHoraFim;
 	private String nomeAvaliador;
+	private BigDecimal notaMinima;
 
 	public AuditoriaDTO(String nome, String loja, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim,
-			String nomeAvaliador) {
+			String nomeAvaliador, BigDecimal notaMinima) {
 		super();
 		this.nome = nome;
 		this.loja = loja;
 		this.dataHoraInicio = dataHoraInicio.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 		this.dataHoraFim = dataHoraFim.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 		this.nomeAvaliador = nomeAvaliador;
+		this.notaMinima = notaMinima;
 	}
 
 	public String getNome() {
@@ -69,5 +72,13 @@ public class AuditoriaDTO {
 
 	public void setNomeAvaliador(String nomeAvaliador) {
 		this.nomeAvaliador = nomeAvaliador;
+	}
+
+	public BigDecimal getNotaMinima() {
+		return notaMinima;
+	}
+
+	public void setNotaMinima(BigDecimal notaMinima) {
+		this.notaMinima = notaMinima;
 	}
 }

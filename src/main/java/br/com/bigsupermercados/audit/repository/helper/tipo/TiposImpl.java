@@ -86,7 +86,8 @@ public class TiposImpl implements TiposQueries {
 		BigDecimal maximoPontos = new BigDecimal((perguntas.size()) * 5);
 
 		BigDecimal pontosAuditoria = perguntas.stream().map(pergunta -> {
-			return new BigDecimal(pergunta.getAvaliacao());
+			BigDecimal ponto = pergunta.getAvaliacao() == null ? BigDecimal.ZERO : new BigDecimal(pergunta.getAvaliacao());
+			return ponto;
 		}).reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		BigDecimal notaGeral = (pontosAuditoria.multiply(new BigDecimal(100)))

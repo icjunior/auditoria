@@ -46,10 +46,11 @@ public class CadastroAuditoriaService {
 		}
 
 		resposta.converteFoto();
-
+		
+		respostas.saveAndFlush(resposta);
 		cadastroFotoService.gravar(resposta);
 
-		return respostas.saveAndFlush(resposta);
+		return resposta;
 	}
 
 	@Transactional

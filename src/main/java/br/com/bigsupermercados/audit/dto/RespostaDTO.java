@@ -12,34 +12,20 @@ public class RespostaDTO {
 	private Long codigo;
 	private String pergunta;
 	private String comentario;
+	private Integer avaliacao;
 	private String foto;
 	private List<String> fotos;
-	private String contentType;
 	private String setor;
-	private InputStream arquivo;
+	private List<InputStream> arquivo;
+	private List<InputStream> arquivos;
 
-	public RespostaDTO(Long codigo, String pergunta, String comentario, String contentType, String setor) {
+	public RespostaDTO(Long codigo, String pergunta, String comentario, String setor, Integer avaliacao) {
 		super();
 		this.codigo = codigo;
 		this.pergunta = pergunta;
 		this.comentario = comentario;
-		this.contentType = contentType;
 		this.setor = setor;
-	}
-
-	private void validaFoto(String foto) {
-		String caminho = null;
-		try {
-			caminho = new File(getDefault().getPath(System.getenv("HOME"), ".brewerfotos").toString())
-					.getCanonicalPath();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (foto == null || foto.equals("")) {
-			this.foto = caminho + "\\temp\\sem_imagem.jpg";
-		} else {
-			this.foto = caminho + "\\temp\\" + foto;
-		}
+		this.avaliacao = avaliacao;
 	}
 
 	public String getPergunta() {
@@ -67,14 +53,6 @@ public class RespostaDTO {
 		this.foto = foto;
 	}
 
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
 	public String getSetor() {
 		return setor;
 	}
@@ -97,6 +75,30 @@ public class RespostaDTO {
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
+	}
+
+	public List<InputStream> getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(List<InputStream> arquivo) {
+		this.arquivo = arquivo;
+	}
+
+	public List<InputStream> getArquivos() {
+		return arquivos;
+	}
+
+	public void setArquivos(List<InputStream> arquivos) {
+		this.arquivos = arquivos;
+	}
+
+	public Integer getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(Integer avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 
 	@Override
@@ -124,11 +126,19 @@ public class RespostaDTO {
 		return true;
 	}
 
-	public InputStream getArquivo() {
-		return arquivo;
+	private void validaFoto(String foto) {
+		String caminho = null;
+		try {
+			caminho = new File(getDefault().getPath(System.getenv("HOME"), ".brewerfotos").toString())
+					.getCanonicalPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (foto == null || foto.equals("")) {
+			this.foto = caminho + "\\temp\\sem_imagem.jpg";
+		} else {
+			this.foto = caminho + "\\temp\\" + foto;
+		}
 	}
 
-	public void setArquivo(InputStream arquivo) {
-		this.arquivo = arquivo;
-	}
 }

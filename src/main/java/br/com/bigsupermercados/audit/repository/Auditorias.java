@@ -15,5 +15,5 @@ public interface Auditorias extends JpaRepository<Auditoria, Long>, AuditoriasQu
 
 	public Optional<Auditoria> findByNomeIgnoreCase(String nome);
 
-	public Auditoria findTop1ByCodigoNotAndTipoAndLojaOrderByDataHoraFimDesc(Long codigoAuditoria, Tipo tipo, Loja loja);
+	public Optional<Auditoria> findTop1ByCodigoNotAndTipoAndLojaOrderByDataHoraFimDesc(Long codigoAuditoria, Tipo tipo, Loja loja);
 }
