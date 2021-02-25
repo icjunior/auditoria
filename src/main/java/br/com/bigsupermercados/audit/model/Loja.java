@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.audit.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -80,6 +81,9 @@ public class Loja implements Serializable {
 	@Email
 	@Column(name = "email_supervisor")
 	private String emailSupervisor;
+
+	@Column(name = "nota_minima")
+	private BigDecimal notaMinima;
 
 	@PrePersist
 	@PreUpdate
@@ -213,5 +217,13 @@ public class Loja implements Serializable {
 
 	public static String removerFormatacao(String cnpj) {
 		return cnpj.replaceAll("\\.|-|/", "");
+	}
+
+	public BigDecimal getNotaMinima() {
+		return notaMinima;
+	}
+
+	public void setNotaMinima(BigDecimal notaMinima) {
+		this.notaMinima = notaMinima;
 	}
 }

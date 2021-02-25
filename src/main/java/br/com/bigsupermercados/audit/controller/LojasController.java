@@ -73,7 +73,7 @@ public class LojasController {
 
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
-		Loja loja = lojas.getOne(codigo);
+		Loja loja = lojas.findOne(codigo);
 
 		ModelAndView mv = novo(loja);
 		mv.addObject("loja", loja);
@@ -83,7 +83,7 @@ public class LojasController {
 	
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Loja loja = lojas.getOne(codigo);
+		Loja loja = lojas.findOne(codigo);
 		try {
 			cadastroLojaService.excluir(loja);
 		} catch (ImpossivelExcluirEntidadeException e) {
