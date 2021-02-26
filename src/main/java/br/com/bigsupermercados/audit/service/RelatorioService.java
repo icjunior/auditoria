@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.audit.dto.AuditoriaDTO;
+import br.com.bigsupermercados.audit.dto.FotoArquivoRelatorioDTO;
 import br.com.bigsupermercados.audit.dto.FotoRelatorioDTO;
 import br.com.bigsupermercados.audit.dto.RespostaDTO;
 import br.com.bigsupermercados.audit.model.Auditoria;
@@ -66,12 +67,14 @@ public class RelatorioService {
 			List<FotoRelatorioDTO> fotos = fotoRepository.findByResposta_Codigo(resposta.getCodigo());
 
 			if (!fotos.isEmpty()) {
-				List<InputStream> arquivos = new ArrayList<>();
+				ArrayList<FotoArquivoRelatorioDTO> arquivos = new ArrayList<>();
 				List<String> fotosStr = fotos.stream().map(f -> f.getCaminho()).collect(Collectors.toList());
 				resposta.setFotos(fotosStr);
 
 				resposta.getFotos().stream().forEach(foto -> {
-					arquivos.add(new ByteArrayInputStream(fotoStorage.recuperaFotoTemporariaRelatorio(foto)));
+					FotoArquivoRelatorioDTO fotoDTO = new FotoArquivoRelatorioDTO(
+							new ByteArrayInputStream(fotoStorage.recuperaFotoTemporariaRelatorio(foto)));
+					arquivos.add(fotoDTO);
 				});
 
 				resposta.setArquivo(arquivos);
@@ -92,6 +95,7 @@ public class RelatorioService {
 		parametros.put("notaGeralAnterior", notaGeralAnterior);
 		parametros.put("avaliacao", avaliarAuditoria(notaGeral, auditoria));
 		parametros.put(JRParameter.REPORT_VIRTUALIZER, fileVirtualizer);
+		parametros.put("subReportDir", "/relatorios/subReportAuditoria.jasper");
 
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(respostaDTO);
 

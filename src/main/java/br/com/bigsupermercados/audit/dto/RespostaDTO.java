@@ -16,7 +16,7 @@ public class RespostaDTO {
 	private String foto;
 	private List<String> fotos;
 	private String setor;
-	private List<InputStream> arquivo;
+	private List<FotoArquivoRelatorioDTO> arquivo;
 	private List<InputStream> arquivos;
 
 	public RespostaDTO(Long codigo, String pergunta, String comentario, String setor, Integer avaliacao) {
@@ -77,11 +77,11 @@ public class RespostaDTO {
 		this.codigo = codigo;
 	}
 
-	public List<InputStream> getArquivo() {
+	public List<FotoArquivoRelatorioDTO> getArquivo() {
 		return arquivo;
 	}
 
-	public void setArquivo(List<InputStream> arquivo) {
+	public void setArquivo(List<FotoArquivoRelatorioDTO> arquivo) {
 		this.arquivo = arquivo;
 	}
 
